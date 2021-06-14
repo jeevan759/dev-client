@@ -3,9 +3,9 @@ var router = express.Router();
 var userLib=require('../backend/lib/userLib');
 var user=require('../backend/models/registrationModel');
 /* GET home page. */
-/*router.get('/', function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
-});*/
+});
 router.post('/api/login',function(req,res){
   userLib.isUserValid(req.body,function(resultJson){
       if(resultJson.success==true){
