@@ -69,11 +69,11 @@ router.post("/regis",function(req,res){
 });
 router.get('/mailbox', function(req, res) {
   // if this is a valid user having session, return his mailbox
-  if(req.session && req.session.user){
+  if(req.session && req.session.username){
       // User is authenticated and his session table has an entry, so we know his username
       // Can we get his details from db?
       // Can we make a db call using userLib or mailboxLib to get his data and return back?
-      res.json({success:true, username:req.session.user.username, 'mailbox': req.session.user.username});
+      res.json({success:true, username:req.session.username});
   }
   else{
       // Redirect him to login page

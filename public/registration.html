@@ -1,33 +1,104 @@
+<!DOCTYPE html>
 <html>
-
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
 
-<body style="background-color: darkgrey;">
-    <div
-        style="top:60px;bottom:500px;width:600px;height:550px;background-color:whitesmoke;right:400px;position:absolute;border:solid;">
-        <center>
-            <h1>REGISTRATION FORM</h1>
-        </center>
-        <b><label style="padding-left:10px;font-size:20px;" for="username">username</label></b><b><label
-                style="padding-left:10px;font-size:20px;padding-left:200px;" for="password">password</label></b><br>
-        <pre> <input style="width: 40%;padding: 12px 20px;margin: 8px 0;border:dotted dashed solid double;border-radius:10px;" type="text" name="username" id="username" required>     <input style="width: 40%;padding: 12px 20px;margin: 8px 0;border:dotted dashed solid double;border-radius:5px;" type="password" name="password" id="password"required></pre>
-        <b><label style="padding-left:10px;font-size:20px;" for="date">Birthday</label></b><b><label
-                style="padding-left:10px;font-size:20px;padding-left:200px;" for="gender">Gender</label></b><br>
-        <pre> <input style="border-radius:5px;width: 40%;padding: 12px 20px;margin: 8px 0;border:dotted dashed solid double;;" type="date" name="date" id="date"required>     <input type="radio" name="gender" value="male" id="male" required><b><label style="font-size:20px;" for="male">Male</label></b>  <input type="radio" name="gender" value="female" id="female" required><b><label style="font-size:20px;" for="female">Female</label><b>  <input type="radio" name="gender" value="other" id="other" required><b><label style="font-size:20px; "for="other">Other</label></b><br><br></pre>
-        <b><label style="padding-left:10px;font-size:20px;" for="email">Email</label></b><b><label
-                style="padding-left:10px;font-size:20px;padding-left:200px;" for="phonenumber">Phone Number</label></b><br>
-        <pre> <input style="border-radius:5px;width: 40%;padding: 12px 20px;margin: 8px 0;border:dotted dashed solid double;;" type="text" name="email" id="email" required>     <input style="border-radius:5px;width: 40%;padding: 12px 20px;margin: 8px 0;border:dotted dashed solid double;;" type="text" name="phonenumber" id="phonenumber" required></pre>
-        <center><button onclick="save()" style="font-size:20px;background-color:rgba(146,67,125);padding: 10px 50px; margin: 4px 2px;"
-                type="button">REGISTER</button>
-                <h1 id="one"></h1>
-    </div>
+/* Button used to open the contact form - fixed at the bottom of the page */
+/* The popup form - hidden by default */
+.form-popup {
+  display: block;
+  position: absolute;
+  top:20px;
+  bottom: 150px;
+  right: 400px;
+  width:460px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+.form-container input[type=date], .form-container input[type=gender] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+.form-container input[type=email], .form-container input[type=text] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+</style>
+</head>
+<body>
+
+<div class="form-popup" id="myForm">
+  <form action="/action_page.php" class="form-container">
+    <h1>REGISTRATION</h1>
+    <pre>
+    <label for="username">Username</label> <input type="text" placeholder="Enter Username" name="username" id="username" required>                                  
+    <label for="password">Password</label> <input type="password" placeholder="Enter Password" name="password" id="password" required>
+    <label for="cpassword">Confirm Password</label> <input type="password" placeholder="Confirm Password" name="cpassword" id="cpassword" required>
+    <label for="birthday">Birthday</label> <input  type="date" name="date" id="date" required>
+    <label for="gender">Gender</label> <input type="radio" name="gender" value="male" id="male" required><b><label for="male">Male</label></b>  <input type="radio" name="gender" value="female" id="female" required><b><label for="female">Female</label><b>  <input type="radio" name="gender" value="other" id="other" required><b><label for="other">Other</label>
+    <label for="email">Email</label> <input type="text" placeholder="Enter Email" name="email" id="email" required>
+    <label for="phonenumber">Phone Number</label> <input type="text" placeholder="Enter Phone Number" name="phonenumber" id="phonenumber" required>
+    <button type="submit" onclick="save()" class="btn">REGISTER</button>
+  </form>
+</div>
 </body>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script>
     function save(){
-        $('#one').html("Registration Successful");
+       // $('#one').html("Registration Successful");
     var userObject={};
     userObject.username=$("#username").val();
     userObject.password=$("#password").val();

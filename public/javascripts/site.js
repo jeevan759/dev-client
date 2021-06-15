@@ -52,7 +52,7 @@ var onSignIn = function(loggedIn){
         console.log("Logged In");
         $("#signedIn").show();
         $("#notSignedIn").hide();
-        $("#welcomeUser").html("Welcome "+ userObject.getCurrentUserName());
+       // $("#welcomeUser").html("Welcome "+ userObject.getCurrentUser());
     }
     else{
         console.log("Not Logged In");
@@ -63,10 +63,23 @@ var onSignIn = function(loggedIn){
 $("#notSignedIn").show();
 $("#signedIn").hide();
 $("#lnkLogout").click(function(){
+    $.post( "/api/logout")
+    .done(function( data ) {
 
+        //console.log(JSON.stringify(data));
+        console.log("signed out");
+        onSignIn(false);
+        if(data.success){
+            userObject.removeCurrentUser();
+        }
+    })
+    .fail(function() {
+        //alert( "error" );
+    })
+    .always(function() {
+        //alert( "finished" );
+    });
 
-    userObject.removeCurrentUser();
-    onSignIn(false);
 })
 $("#btnLogin").on('click', function(e){
     e.preventDefault();
@@ -82,6 +95,7 @@ $("#btnLogin").on('click', function(e){
         
         if(data.success){
             toastr.success(data.message, 'Successful');
+            $("#welcomeUser").html("Welcome "+ JSON.stringify(data.user.username));
             userObject.saveUserInLocalStorage(data.user);
             onSignIn(true);
         }

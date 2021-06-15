@@ -38,6 +38,7 @@ app.use(session({
     user.find(req.body, function(err, data) {
         var response = {success: false, message: 'Login Failed', user: null };
         if (err) { res.status(400).json({ msg: "Failed" }); } else if (data.length == 1) {
+            //req.session.user=data
             req.session.userid = data[0]._id
             req.session.username = data[0].username
             console.log(req.session)
@@ -45,8 +46,6 @@ app.use(session({
         response.message = 'Login Successful';
         response.user = {username: req.session.username};
             res.json(response);
-            
-
         } else {
 
             res.redirect("/login");
@@ -69,6 +68,18 @@ var isNotAuthenticated = (req, res, next) => {
 app.get("/", isAuthenticated, (req, res) => {
     res.sendFile(__dirname + "/public/sample.html")
 })
+app.post("/api/logout", (req, res) => {
+    var response = {success: false, message: 'Login Failed', user: null };
+    req.session.destroy(err => {
+        if (err)
+            return res.status(404).json({
+                err: "error"
+            }) 
+    })
+
+    res.json(response);
+
+})
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.get('/check',function(req,res){
@@ -77,6 +88,10 @@ app.get('/check',function(req,res){
 })
 app.get('/register',function(req,res){
     path=__dirname+'/public/registration.html';
+    res.sendFile(path);
+})
+app.get('/test',function(req,res){
+    path=__dirname+'/public/sample.html';
     res.sendFile(path);
 })
 module.exports = app;
