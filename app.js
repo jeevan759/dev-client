@@ -7,7 +7,7 @@ var session = require('express-session');
 var dbconnect = require('./backend/lib/connectLib');
 var config = require('./backend/config/config');
 var user=require('./backend/models/registrationModel');
-require('./backend/lib/dbUsersBootstrap').createUsers();
+//require('./backend/lib/dbUsersBootstrap').createUsers();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var userLib=require('./backend/lib/userLib');
@@ -68,7 +68,7 @@ var isNotAuthenticated = (req, res, next) => {
 app.get("/", isAuthenticated, (req, res) => {
     res.sendFile(__dirname + "/public/sample.html")
 })
-app.post("/api/logout", (req, res) => {
+app.post("/api/loggedout", (req, res) => {
     var response = {success: false, message: 'Login Failed', user: null };
     req.session.destroy(err => {
         if (err)
@@ -91,7 +91,7 @@ app.get('/register',function(req,res){
     res.sendFile(path);
 })
 app.get('/test',function(req,res){
-    path=__dirname+'/public/sample.html';
+    path=__dirname+'/public/test.html';
     res.sendFile(path);
 })
 module.exports = app;

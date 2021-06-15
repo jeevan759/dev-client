@@ -50,7 +50,7 @@
         <div id="notSignedIn">
         <form class="d-flex">
           <input class="form-control me-sm-2" type="text" placeholder="Username" id="txtUsername">
-          <input class="form-control me-sm-2" type="text" placeholder="Password" id="txtPassword">
+          <input class="form-control me-sm-2" type="password" placeholder="Password" id="txtPassword">
           <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="btnLogin">Login</button>&nbsp;
           <div class="g-signin2" data-onsuccess="onSignIn"></div>
           <a href="/registration.html" target="_blank">Register</a>
@@ -67,6 +67,7 @@
               <a class="dropdown-item" href="#">Something else here</a>
               <div class="dropdown-divider"></div>
               <a id="lnkLogout" class="dropdown-item" href="#">Logout</a>
+              <a id="lnkSignout" class="dropdown-item" href="#">Logout</a>
             </div>
           </li>
         </ul>
@@ -74,6 +75,7 @@
   </nav>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="445093466494-u1c7jg8178j553gv6o6ao8uohia3cja6.apps.googleusercontent.com">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js" integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

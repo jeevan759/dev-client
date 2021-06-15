@@ -1,24 +1,93 @@
-$(document).ready(function(){
-    function signOut() {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-          console.log('User signed out.');
-        });
-      }
-    function onSignIn(googleUser) {
-        var id_token = googleUser.getAuthResponse().id_token;
-        var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/login');
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.onload = function() {
-            console.log('Signed in as: ' + xhr.responseText);
-            if(xhr.responseText=='success'){
-                signOut();
-                location.assign('/sample');
-            }
-            };
-            xhr.send(JSON.stringify({token: id_token}));
+/*var onSignIn = function(loggedIn){
+    if(loggedIn){
+        console.log("Logged In");
+        $("#signedIn").show();
+        $("#notSignedIn").hide();
+       // $("#welcomeUser").html("Welcome "+ userObject.getCurrentUser());
+    }
+    else{
+        console.log("Not Logged In");
+        $("#notSignedIn").show();
+        $("#signedIn").hide();
+    }
+}*/
+$("#lnkSignout").on('click',function(){
+    $.post( "/api/logout")
+    .done(function( data ) {
+        //signOut();
+        //console.log("signed out");
+        //onSignIn(false);
+        if(data.success==false){
+            $("#notSignedIn").show();
+            $("#signedIn").hide();
+            signOut();
+        }
+    })
+    .fail(function() {
+        //alert( "error" );
+    })
+    .always(function() {
+        //alert( "finished" );
+    });
+})
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
+  function getPayload(){
+    $.post( "/loggedin")
+    .done(function( data ) {
+        //signOut();
+        //console.log("signed out");
+        //onSignIn(false);
+        //console.log(data);
+    })
+    .fail(function() {
+        //alert( "error" );
+    })
+    .always(function() {
+        //alert( "finished" );
+    });
+  }
+function onSignIn(googleUser) {
+    //console.log("signin");
+    var id_token = googleUser.getAuthResponse().id_token;
+    var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/loggedin');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+            //console.log(payload);
+        console.log('Signed in as: ' + xhr.responseText);
+        //console.log(xhr.responseText.given_name);
+        if(xhr.responseText=='success'){
+            //signOut();
+            //getPayload();
+            //$("#notSignedIn").show();
+            $("#signedIn").show();
+        $("#notSignedIn").hide();
+        $("#lnkLogout").hide();
+        $("#lnkSignout").show();
+            //onSignIn(true);
+        }
+        };
+        xhr.send(JSON.stringify({token: id_token}));
 }
+$(document).ready(function(){
+    var onSignIn = function(loggedIn){
+        if(loggedIn){
+            console.log("Logged In");
+            $("#signedIn").show();
+            $("#notSignedIn").hide();
+           // $("#welcomeUser").html("Welcome "+ userObject.getCurrentUser());
+        }
+        else{
+            console.log("Not Logged In");
+            $("#notSignedIn").show();
+            $("#signedIn").hide();
+        }
+    }
     var userObject = {
         saveUserInLocalStorage : function(userJson){
             window.localStorage.setItem('currentUser', JSON.stringify(userJson));
@@ -47,23 +116,10 @@ $(document).ready(function(){
     };
 
     console.log("jquery running");
-var onSignIn = function(loggedIn){
-    if(loggedIn){
-        console.log("Logged In");
-        $("#signedIn").show();
-        $("#notSignedIn").hide();
-       // $("#welcomeUser").html("Welcome "+ userObject.getCurrentUser());
-    }
-    else{
-        console.log("Not Logged In");
-        $("#notSignedIn").show();
-        $("#signedIn").hide();
-    }
-}
 $("#notSignedIn").show();
 $("#signedIn").hide();
 $("#lnkLogout").click(function(){
-    $.post( "/api/logout")
+    $.post( "/api/loggedout")
     .done(function( data ) {
 
         //console.log(JSON.stringify(data));
@@ -84,6 +140,8 @@ $("#lnkLogout").click(function(){
 $("#btnLogin").on('click', function(e){
     e.preventDefault();
     e.stopPropagation(); 
+    $("#lnkLogout").show();
+    $("#lnkSignout").hide();
     var userObj = {username: '', password:''};
     userObj.username = $("#txtUsername").val();
     userObj.password = $("#txtPassword").val();

@@ -25,7 +25,7 @@ router.post('/api/login',function(req,res){
       res.json(resultJson);
      })
 })
-router.post('/login',function(req,res){
+router.post('/loggedin',function(req,res){
   let token=req.body.token;
   console.log(token);
   async function verify() {
@@ -67,6 +67,12 @@ router.post("/regis",function(req,res){
       console.log(data);
   });
 });
+router.post('/api/logout',function(req,res){
+  //console.log("hi");
+  var response = {success: false, message: 'Login Failed', user: null };
+  //res.clearCookie('session-token');
+  res.json(response);
+})
 router.get('/mailbox', function(req, res) {
   // if this is a valid user having session, return his mailbox
   if(req.session && req.session.username){
