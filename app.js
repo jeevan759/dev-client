@@ -1,4 +1,5 @@
 var express = require('express');
+var app = express();
 var MongoStore = require('connect-mongo');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -12,7 +13,14 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var userLib=require('./backend/lib/userLib');
 
-var app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+io.on('connection', (socket) => {
+    socket.on('chat message', msg => {
+      io.emit('chat message', msg);
+    });
+  });
+
 dbconnect.connect();
 app.use(logger('dev'));
 app.use(express.json());
@@ -94,4 +102,12 @@ app.get('/test',function(req,res){
     path=__dirname+'/public/test.html';
     res.sendFile(path);
 })
+app.get('/chat',function(req,res){
+    path=__dirname+'/public/chat.html';
+    res.sendFile(path);
+})
+const port = process.env.PORT || 3000;
+http.listen(port, () => {
+    console.log(`Socket.IO server running at http://localhost:${port}/`);
+  });
 module.exports = app;
