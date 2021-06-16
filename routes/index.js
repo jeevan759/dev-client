@@ -65,6 +65,7 @@ router.post("/regis",function(req,res){
           throw err;
       }
       console.log(data);
+      res.json(data);
   });
 });
 router.put("/edit:username", userLib.update);

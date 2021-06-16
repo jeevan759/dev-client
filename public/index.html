@@ -47,15 +47,6 @@
             </div>
           </li>
         </ul>
-        <div id="notSignedIn">
-        <form class="d-flex">
-          <input class="form-control me-sm-2" type="text" placeholder="Username" id="txtUsername">
-          <input class="form-control me-sm-2" type="password" placeholder="Password" id="txtPassword">
-          <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="btnLogin">Login</button>&nbsp;
-          <div class="g-signin2" data-onsuccess="onSignIn"></div>
-          <a href="/registration.html" target="_blank">Register</a>
-        </form>
-        </div>
       </div>
       <div id="signedIn">
         <ul class="navbar-nav me-auto">
@@ -73,6 +64,17 @@
         </ul>
     </div>
   </nav>
+  <div id="notSignedIn" style="padding-top: 100px;padding-left: 500px;">
+    <form class="d-flex">
+      <pre>
+      <input class="form-control me-sm-2" type="text" placeholder="Username" id="txtUsername">
+      <input class="form-control me-sm-2" type="password" placeholder="Password" id="txtPassword">
+      <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="btnLogin">Login</button>&nbsp;
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+      <a href="/registration.html" target="_blank">Register</a>
+      </pre>
+    </form>
+    </div>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="445093466494-u1c7jg8178j553gv6o6ao8uohia3cja6.apps.googleusercontent.com">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
