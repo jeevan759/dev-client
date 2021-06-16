@@ -67,6 +67,7 @@ router.post("/regis",function(req,res){
       console.log(data);
   });
 });
+router.put("/edit:username", userLib.update);
 router.post('/api/logout',function(req,res){
   //console.log("hi");
   var response = {success: false, message: 'Login Failed', user: null };

@@ -13,8 +13,25 @@ module.exports.isUserValid=function(userJson,cb){
             return cb(response);
         }
         response.success = true;
-        response.message = 'Login Successful';
-        response.user = {username: collections[0].username};
+        response.message = 'Login SuccessFul';
+        response.user = {username: collections[0].username,phonenumber: collections[0].phonenumber,date:collections[0].date,email:collections[0].email};
         cb(response);
+    })
+}
+module.exports.update = function(req,res)
+{
+   // console.log(req);
+   var username=req.body.username;
+    var obj = userModel.find({username: username},function(err,obj){
+        console.log(username);
+    userModel.findByIdAndUpdate(obj[0]._id, {username: JSON.stringify(req.body.username),date: JSON.stringify(req.body.date),email: JSON.stringify(req.body.email),phonenumber: JSON.stringify(req.body.phonenumber)},
+     function (err, docs) {
+    if (err){
+console.log(err)
+}
+else{
+console.log("Updated User : ", docs);
+}
+});
     })
 }

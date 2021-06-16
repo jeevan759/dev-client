@@ -148,8 +148,9 @@ $("#btnLogin").on('click', function(e){
     console.log(userObj);
     $.post( "/api/login", userObj)
     .done(function( data ) {
-
-        console.log(JSON.stringify(data));
+        var datapro=data;
+        console.log(datapro);
+        //console.log(JSON.stringify(data));
         
         if(data.success){
             toastr.success(data.message, 'Successful');
@@ -168,4 +169,11 @@ $("#btnLogin").on('click', function(e){
         //alert( "finished" );
     });
 })
+})
+//console.log(datapro);
+$("#profile").on('click',function(){
+    $("#username").html( JSON.stringify(datapro.user.username));
+    $("#date").html( JSON.stringify(datapro.user.date));
+    $("#email").html(JSON.stringify(datapro.user.email));
+    $("#phonenumber").html(JSON.stringify(datapro.user.phonenumber));
 })

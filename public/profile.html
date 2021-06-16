@@ -14,54 +14,31 @@
 </head>
 <body>
     <form class="d-flex">
-        <form>
+        <form  aria-disabled="true">
             <fieldset>
-              <legend>REGISTRATION</legend>
+              <legend>PROFILE</legend>
               
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">EDIT PROFILE</label>
+      </div>
               <div class="form-group">
                 <label for="exampleInputEmail1" class="form-label mt-4">Username</label>
-                <input type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter email">
+                <input type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter email" disabled="true">
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1" class="form-label mt-4">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1" class="form-label mt-4">Confirm Password</label>
-                <input type="password" class="form-control" id="cpassword" placeholder="Password">
-              </div>
-              <div class="form-group">
                 <label for="exampleInputPassword1" class="form-label mt-4">Birthday</label>
-                <input type="date" class="form-control" id="date" placeholder="Birthday">
+                <input type="date" class="form-control" id="date" placeholder="Birthday" disabled="true">
               </div>
               <fieldset class="form-group">
-                <legend class="mt-4">Gender</legend>
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="optionsRadios" id="male" value="male">
-                    Male
-                  </label>
-                </div>
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="optionsRadios" id="female" value="female">
-                    Female
-                  </label>
-                </div>
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="optionsRadios" id="other" value="other">
-                    Other
-                  </label>
-                </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1" class="form-label mt-4">Email address</label>
-                  <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                  <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" disabled="true">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1" class="form-label mt-4">Email Phone Number</label>
-                  <input type="text" class="form-control" id="phonenumber" aria-describedby="emailHelp" placeholder="Enter Phone Number">
+                  <input type="text" class="form-control" id="phonenumber" aria-describedby="emailHelp" placeholder="Enter Phone Number" disabled="true">
                 </div>
                     
                 </fieldset>
@@ -77,32 +54,38 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js" integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/javascripts/site.js"></script>
 </body>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script>
+    $( ".form-check-input" ).on( "change", function() {
+        if($('.form-check-input').prop('checked')){
+            //console.log("checked");
+        $("#username").prop("disabled", false);
+        $("#date").prop("disabled", false);
+        $("#email").prop("disabled", false);
+        $("#phonenumber").prop("disabled", false);
+        }
+        else{
+            $("#username").prop("disabled", true);
+        $("#date").prop("disabled", true);
+        $("#email").prop("disabled", true);
+        $("#phonenumber").prop("disabled", true);
+        }
+});
+
     function save(){
       console.log("saved");
        // $('#one').html("Registration Successful");
     var userObject={};
     userObject.username=$("#username").val();
-    userObject.password=$("#password").val();
     userObject.birthday=$("#date").val();
-    if(document.getElementById('male').checked) {
-        userObject.gender=$("#male").val();
-}else if(document.getElementById('female').checked) {
-    userObject.gender=$("#female").val();
-}
-else if(document.getElementById('other').checked) {
-    userObject.gender=$("#other").val();
-}
-
-   // userObject.gender=$("#gender").val();
     userObject.email=$("#email").val();
     userObject.phonenumber=$("#phonenumber").val();
-    console.log(userObject);
+    //console.log(userObject);
     $.ajax({
-        url: "/regis",
-        type: "POST",
+        url: "/edit"+username,
+        type: "PUT",
         data: userObject,
         success: function(data) {
        /*for(var i=0;i<data.length;i++) {
