@@ -137,19 +137,19 @@ $("#lnkLogout").click(function(){
     });
 
 })
-$("#btnLogin").on('click', function(e){
+$("#btnLogIn").on('click', function(e){
     e.preventDefault();
     e.stopPropagation(); 
     $("#lnkLogout").show();
     $("#lnkSignout").hide();
     var userObj = {username: '', password:''};
-    userObj.username = $("#txtUsername").val();
-    userObj.password = $("#txtPassword").val();
+    userObj.username = $("#Username").val();
+    userObj.password = $("#Password").val();
     console.log(userObj);
     $.post( "/api/login", userObj)
     .done(function( data ) {
         var datapro=data;
-        console.log(datapro);
+        //console.log(datapro);
         //console.log(JSON.stringify(data));
         
         if(data.success){

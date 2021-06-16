@@ -68,9 +68,8 @@
                 
             </fieldset>
         </form>
-        <button onclick="save()" type="submit" class="btn btn-primary">Submit</button>
+        <button onclick="save()" type="submit" class="btn btn-primary" id="btn">Submit</button>
     </form>
-
 
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -80,6 +79,16 @@
 </body>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script>
+   $( ".form-check-input" ).on( "change", function() {
+    console.log("checked");
+        if($('.form-check-input').prop('checked')){
+            console.log("checked");
+        $("#btn").attr("disabled", false);
+        }
+        else{
+            $("#btn").attr("disabled", true);
+        }
+});
     function save(){
       console.log("saved");
        // $('#one').html("Registration Successful");

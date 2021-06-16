@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
   <link rel="stylesheet" href="/stylesheets/style.css">
+  <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
+  <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
@@ -64,14 +67,23 @@
         </ul>
     </div>
   </nav>
-  <div id="notSignedIn" style="padding-top: 100px;" class="container-fluid">
-    <form class="d-flex">
-      <input class="form-control me-sm-2" type="text" placeholder="Username" id="txtUsername">
-      <input class="form-control me-sm-2" type="password" placeholder="Password" id="txtPassword">
-      <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="btnLogin">Login</button>&nbsp;
-      <div class="g-signin2" data-onsuccess="onSignIn"></div>
-      <a href="/registration.html">Register</a>
-    </form>
+  <div style="padding-top: 60px;" id="notSignedIn" >
+  <form class="form-signin">
+    <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input type="text" class="form-control" placeholder="Email address" required="" autofocus="" id="Username">
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" class="form-control" placeholder="Password" required="" id="Password">
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me" style="color:blue"> Remember me
+      </label>
+    </div>
+    <pre style="font-size: medium;"><p>Don't have an account?</p><a href="/registration.html">Sign Up</a></pre>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" id="btnLogIn">Login</button>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+  </form>
   </div>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="445093466494-u1c7jg8178j553gv6o6ao8uohia3cja6.apps.googleusercontent.com">
