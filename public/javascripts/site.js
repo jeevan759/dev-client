@@ -38,7 +38,9 @@ function signOut() {
       console.log('User signed out.');
     });
   }
-$("#search").on('click',function(){
+$("#search").on('click',function(e){
+    e.preventDefault();
+    e.stopPropagation();
     var user=$("#input-search").val();
     console.log("hi");
     $.get( "/api/search"+user)
@@ -48,16 +50,20 @@ $("#search").on('click',function(){
         //console.log("signed out");
         //onSignIn(false);
         if(data.success==true){
+            toastr.success( 'User Found');
         console.log(JSON.stringify(data.user.username));
         $("#name").html(JSON.stringify(data.user.username));
-        suggestions.push(JSON.stringify(data.user.username));
-        console.log(suggestions[0]);
+        }
+        else{
+            toastr.error( 'User Not Found');
         }
     })
     .fail(function() {
+        //toastr.error( 'User Not Found');
         //alert( "error" );
     })
     .always(function() {
+        //toastr.error( 'User Not Found');
         //alert( "finished" );
     });
   })

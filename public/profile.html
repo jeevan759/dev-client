@@ -13,6 +13,63 @@
   <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Home
+              <span class="visually-hidden">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mailbox">Mailbox</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Welcome</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Separated link</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div id="signedIn">
+        <form class="d-flex">
+          <input class="form-control me-sm-2" type="text" placeholder="Search" id="input-search">
+          <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="search">Search</button>
+        </form>
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item dropdown">
+            
+            <a id="welcomeUser" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Welcome user</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/profile.html" target="_blank" id="profile">Profile</a>
+              <a class="dropdown-item" href="/index2.html">Chat</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+              <div class="dropdown-divider"></div>
+              <a id="lnkLogout" class="dropdown-item" href="#">Logout</a>
+              <a id="lnkSignout" class="dropdown-item" href="#">Logout</a>
+            </div>
+          </li>
+        </ul>
+    </div>
+  </nav>
+  
     <form class="d-flex">
         <form  aria-disabled="true">
             <fieldset>
@@ -22,10 +79,15 @@
         <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
         <label class="form-check-label" for="flexSwitchCheckDefault">EDIT PROFILE</label>
       </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1" class="form-label mt-4">Old Username</label>
+        <input type="text" class="form-control" id="oldusername" aria-describedby="emailHelp" placeholder="Enter Old Username" disabled="true">
+        <small id="emailHelp" class="form-text text-muted"></small>
+      </div>
               <div class="form-group">
-                <label for="exampleInputEmail1" class="form-label mt-4">Username</label>
-                <input type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter email" disabled="true">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                <label for="exampleInputEmail1" class="form-label mt-4">New Username</label>
+                <input type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter New Username" disabled="true">
+                <small id="emailHelp" class="form-text text-muted"></small>
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword1" class="form-label mt-4">Birthday</label>
@@ -62,11 +124,13 @@
         if($('.form-check-input').prop('checked')){
             //console.log("checked");
         $("#username").prop("disabled", false);
+        $("#oldusername").prop("disabled", false);
         $("#date").prop("disabled", false);
         $("#email").prop("disabled", false);
         $("#phonenumber").prop("disabled", false);
         }
         else{
+          $("#oldusername").prop("disabled", true);
             $("#username").prop("disabled", true);
         $("#date").prop("disabled", true);
         $("#email").prop("disabled", true);
@@ -78,20 +142,21 @@
       console.log("saved");
        // $('#one').html("Registration Successful");
     var userObject={};
+    userObject.oldusername=$("#oldusername").val();
     userObject.username=$("#username").val();
-    userObject.birthday=$("#date").val();
+    userObject.date=$("#date").val();
     userObject.email=$("#email").val();
     userObject.phonenumber=$("#phonenumber").val();
     //console.log(userObject);
     $.ajax({
-        url: "/edit"+username,
+        url: "/edit"+userObject.oldusername,
         type: "PUT",
         data: userObject,
         success: function(data) {
-       /*for(var i=0;i<data.length;i++) {
-           console.log(data[i]);
-          addRow(data[i]);
-        }*/
+          console.log("hi");
+        if(data.success){
+        toastr.success( 'Updated successfully');
+        }
         },
         error: function (xhr, status, error) {
         //alert(error);

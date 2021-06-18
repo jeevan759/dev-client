@@ -14,6 +14,8 @@ const {userJoin,getCurrentUser,userLeave,getRoomUsers}=require('./public/utils/u
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var userLib=require('./backend/lib/userLib');
+const mongoose=require('mongoose');
+mongoose.set('useFindAndModify', false);
 
 const http=require('http');
 const socketio=require('socket.io');

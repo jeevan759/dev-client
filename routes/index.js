@@ -70,7 +70,7 @@ router.post("/regis",function(req,res){
       res.json(data);
   });
 });
-router.put("/edit:username", userLib.update);
+router.put("/edit:oldusername", userLib.update);
 router.post('/api/logout',function(req,res){
   //console.log("hi");
   var response = {success: false, message: 'Login Failed', user: null };

@@ -50,16 +50,22 @@ res.send(obj);
 module.exports.update = function(req,res)
 {
    // console.log(req);
-   var user=req.params.user;
+   var response = {success: false, message: 'Login Failed', user: null };
+   var user=req.params.oldusername;
+   //console.log(JSON.stringify(user));
    //var username=req.body.username;
     var obj = userModel.find({username: user},function(err,obj){
         console.log(user);
-    userModel.findByIdAndUpdate(obj[0]._id, {username: JSON.stringify(req.body.username),date: JSON.stringify(req.body.date),email: JSON.stringify(req.body.email),phonenumber: JSON.stringify(req.body.phonenumber)},
+        const query = { username: user };
+        console.log((req.body.date))
+   //Model.findOneAndUpdate(query, { name: 'jason bourne' }, options, callback)
+    userModel.findOneAndUpdate(query, {username:(req.body.username),date: (req.body.date),email: (req.body.email),phonenumber:(req.body.phonenumber)},
      function (err, docs) {
     if (err){
 console.log(err)
 }
 else{
+    response.success = true;
 console.log("Updated User : ", docs);
 }
 });
