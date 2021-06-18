@@ -52,12 +52,17 @@
         </ul>
       </div>
       <div id="signedIn">
+        <form class="d-flex">
+          <input class="form-control me-sm-2" type="text" placeholder="Search" id="input-search">
+          <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="search">Search</button>
+        </form>
         <ul class="navbar-nav me-auto">
           <li class="nav-item dropdown">
+            
             <a id="welcomeUser" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Welcome user</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="/profile.html" target="_blank" id="profile">Profile</a>
-              <a class="dropdown-item" href="/chat.html">Chat</a>
+              <a class="dropdown-item" href="/index2.html">Chat</a>
               <a class="dropdown-item" href="#">Something else here</a>
               <div class="dropdown-divider"></div>
               <a id="lnkLogout" class="dropdown-item" href="#">Logout</a>
@@ -92,5 +97,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js" integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="/javascripts/site.js"></script>
+   
+     <script src="/javascripts/searchbox.js"></script>
 </body>
 </html>

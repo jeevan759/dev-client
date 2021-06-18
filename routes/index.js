@@ -25,7 +25,7 @@ router.post('/api/login',function(req,res){
       res.json(resultJson);
      })
 })
-router.post('/loggedin',function(req,res){
+router.post('/api/loggedin',function(req,res){
   let token=req.body.token;
   console.log(token);
   async function verify() {
@@ -39,8 +39,10 @@ router.post('/loggedin',function(req,res){
 }
 verify()
 .then(()=>{
+  
     res.cookie('session-token',token);
     res.send('success');
+    //res.json(payload);
 }).catch(console.error);
 })
 router.post("/regis",function(req,res){

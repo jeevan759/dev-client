@@ -11,6 +11,8 @@
         $("#signedIn").hide();
     }
 }*/
+$("#notSignedIn").show();
+$("#signedIn").hide();
 $("#lnkSignout").on('click',function(){
     $.post( "/api/logout")
     .done(function( data ) {
@@ -36,13 +38,21 @@ function signOut() {
       console.log('User signed out.');
     });
   }
-  function getPayload(){
-    $.post( "/loggedin")
+$("#search").on('click',function(){
+    var user=$("#input-search").val();
+    console.log("hi");
+    $.get( "/api/search"+user)
     .done(function( data ) {
+        //console.log("enter");
         //signOut();
         //console.log("signed out");
         //onSignIn(false);
-        //console.log(data);
+        if(data.success==true){
+        console.log(JSON.stringify(data.user.username));
+        $("#name").html(JSON.stringify(data.user.username));
+        suggestions.push(JSON.stringify(data.user.username));
+        console.log(suggestions[0]);
+        }
     })
     .fail(function() {
         //alert( "error" );
@@ -50,12 +60,12 @@ function signOut() {
     .always(function() {
         //alert( "finished" );
     });
-  }
+  })
 function onSignIn(googleUser) {
     //console.log("signin");
     var id_token = googleUser.getAuthResponse().id_token;
     var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/loggedin');
+        xhr.open('POST', '/api/loggedin');
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function() {
             //console.log(payload);
@@ -74,7 +84,7 @@ function onSignIn(googleUser) {
         };
         xhr.send(JSON.stringify({token: id_token}));
 }
-$(document).ready(function(){
+$(document).ready(function(){ 
     var onSignIn = function(loggedIn){
         if(loggedIn){
             console.log("Logged In");
@@ -118,7 +128,9 @@ $(document).ready(function(){
     console.log("jquery running");
 $("#notSignedIn").show();
 $("#signedIn").hide();
-$("#lnkLogout").click(function(){
+$("#lnkLogout").click(function(e){
+    e.preventDefault();
+    e.stopPropagation(); 
     $.post( "/api/loggedout")
     .done(function( data ) {
 

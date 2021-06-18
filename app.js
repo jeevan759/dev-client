@@ -8,18 +8,49 @@ var session = require('express-session');
 var dbconnect = require('./backend/lib/connectLib');
 var config = require('./backend/config/config');
 var user=require('./backend/models/registrationModel');
+const formatMessage=require('./public/utils/messages');
+const {userJoin,getCurrentUser,userLeave,getRoomUsers}=require('./public/utils/users');
 //require('./backend/lib/dbUsersBootstrap').createUsers();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var userLib=require('./backend/lib/userLib');
 
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
-io.on('connection', (socket) => {
-    socket.on('chat message', msg => {
-      io.emit('chat message', msg);
+const http=require('http');
+const socketio=require('socket.io');
+const server=http.createServer(app);
+const io= socketio(server);
+const botName='Chat Bot';
+io.on('connection',socket=>{
+
+    socket.on('joinRoom',({username,room})=>{
+        console.log("room");
+       const user=userJoin(socket.id,username,room);
+       socket.join(user.room);
+
+        socket.emit('message',formatMessage(botName,'welcome to chat'));
+        socket.broadcast.to(user.room).emit('message',formatMessage(botName,`${user.username} has joined the chat`)); 
+io.to(user.room).emit('roomUsers',{
+    room:user.room,
+    users:getRoomUsers(user.room)
+});
+    
+});  
+
+    socket.on('chatMessage',(msg)=>{
+        //const user=userJoin(socket.id,username,room);
+        const user=getCurrentUser(socket.id);
+        io.to(user.room).emit('message',formatMessage(user.username,msg));
     });
-  });
+    socket.on('disconnect',()=>{
+const user=userLeave(socket.id);
+
+if(user){
+    io.to(user.room).emit('message',formatMessage(botName,`${user.username} has left the chat`));
+}
+    });
+});
+
+
 
 dbconnect.connect();
 app.use(logger('dev'));
@@ -41,7 +72,14 @@ app.use(session({
     store: MongoStore.create({ mongoUrl: process.env.MONGO_CONNECT_STRING })
   
   }))
-  
+
+  app.get("/api/search:user",function(req,res){
+      var user=req.params.user;
+      //console.log(user);
+    userLib.search(user,function(resultJson){
+        res.json(resultJson);
+       })
+  })
   app.post('/api/login', function(req, res) {
     user.find(req.body, function(err, data) {
         var response = {success: false, message: 'Login Failed', user: null };
@@ -106,8 +144,12 @@ app.get('/chat',function(req,res){
     path=__dirname+'/public/chat.html';
     res.sendFile(path);
 })
+app.get('/searchbox',function(req,res){
+    path=__dirname+'/public/searchbox.html';
+    res.sendFile(path);
+})
 const port = process.env.PORT || 3000;
-http.listen(port, () => {
+server.listen(port, () => {
     console.log(`Socket.IO server running at http://localhost:${port}/`);
   });
 module.exports = app;
