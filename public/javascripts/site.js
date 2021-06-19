@@ -11,6 +11,7 @@
         $("#signedIn").hide();
     }
 }*/
+$("#signedInchat").hide();
 $("#notSignedIn").show();
 $("#signedIn").hide();
 $("#lnkSignout").on('click',function(){
@@ -22,6 +23,7 @@ $("#lnkSignout").on('click',function(){
         if(data.success==false){
             $("#notSignedIn").show();
             $("#signedIn").hide();
+            $("#signedInchat").hide();
             signOut();
         }
     })
@@ -85,6 +87,7 @@ function onSignIn(googleUser) {
         $("#notSignedIn").hide();
         $("#lnkLogout").hide();
         $("#lnkSignout").show();
+        $("#signedInchat").show();
             //onSignIn(true);
         }
         };
@@ -102,6 +105,7 @@ $(document).ready(function(){
             console.log("Not Logged In");
             $("#notSignedIn").show();
             $("#signedIn").hide();
+            $("#signedInchat").hide();
         }
     }
     var userObject = {
