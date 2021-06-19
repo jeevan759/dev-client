@@ -150,6 +150,10 @@ app.get('/searchbox',function(req,res){
     path=__dirname+'/public/searchbox.html';
     res.sendFile(path);
 })
+app.get('/slide',function(req,res){
+    path=__dirname+'/public/slide.html';
+    res.sendFile(path);
+})
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
     console.log(`Socket.IO server running at http://localhost:${port}/`);

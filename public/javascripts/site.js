@@ -11,6 +11,8 @@
         $("#signedIn").hide();
     }
 }*/
+
+$("#slide").hide();
 $("#profileb").hide();
 $("#mailb").hide();
 $("#signedInchat").hide();
@@ -28,6 +30,7 @@ $("#lnkSignout").on('click',function(){
             $("#signedInchat").hide();
             $("#mailb").hide();
             $("#profileb").hide();
+            $("#slide").hide();
             signOut();
         }
     })
@@ -94,6 +97,7 @@ function onSignIn(googleUser) {
         $("#signedInchat").show();
         $("#mailb").show();
         $("#profileb").show();
+        $("#slide").show();
             //onSignIn(true);
         }
         };
@@ -108,6 +112,7 @@ $(document).ready(function(){
             $("#mailb").show();
             $("#signedInchat").show();
             $("#profileb").show();
+            $("#slide").show();
            // $("#welcomeUser").html("Welcome "+ userObject.getCurrentUser());
         }
         else{
@@ -117,6 +122,7 @@ $(document).ready(function(){
             $("#signedInchat").hide();
             $("#mailb").hide();
             $("#profileb").hide();
+            $("#slide").hide();
         }
     }
     var userObject = {
@@ -210,3 +216,23 @@ $("#profile").on('click',function(){
     $("#email").html(JSON.stringify(datapro.user.email));
     $("#phonenumber").html(JSON.stringify(datapro.user.phonenumber));
 })
+
+var slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}    
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+  setTimeout(showSlides, 2000); // Change image every 2 seconds
+}
