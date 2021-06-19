@@ -11,6 +11,8 @@
         $("#signedIn").hide();
     }
 }*/
+$("#profileb").hide();
+$("#mailb").hide();
 $("#signedInchat").hide();
 $("#notSignedIn").show();
 $("#signedIn").hide();
@@ -24,6 +26,8 @@ $("#lnkSignout").on('click',function(){
             $("#notSignedIn").show();
             $("#signedIn").hide();
             $("#signedInchat").hide();
+            $("#mailb").hide();
+            $("#profileb").hide();
             signOut();
         }
     })
@@ -88,6 +92,8 @@ function onSignIn(googleUser) {
         $("#lnkLogout").hide();
         $("#lnkSignout").show();
         $("#signedInchat").show();
+        $("#mailb").show();
+        $("#profileb").show();
             //onSignIn(true);
         }
         };
@@ -99,6 +105,9 @@ $(document).ready(function(){
             console.log("Logged In");
             $("#signedIn").show();
             $("#notSignedIn").hide();
+            $("#mailb").show();
+            $("#signedInchat").show();
+            $("#profileb").show();
            // $("#welcomeUser").html("Welcome "+ userObject.getCurrentUser());
         }
         else{
@@ -106,6 +115,8 @@ $(document).ready(function(){
             $("#notSignedIn").show();
             $("#signedIn").hide();
             $("#signedInchat").hide();
+            $("#mailb").hide();
+            $("#profileb").hide();
         }
     }
     var userObject = {
