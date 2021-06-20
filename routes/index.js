@@ -77,7 +77,6 @@ userLib.mailCheck(req.body,function(resultJson){
       }
       console.log(data);
       res.json(data);
-      res.redirect('/login');
   });
   }
 })
