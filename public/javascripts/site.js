@@ -113,6 +113,8 @@ $(document).ready(function(){
             $("#signedInchat").show();
             $("#profileb").show();
             $("#slide").show();
+            $("#lnkLogout").show();
+            $("#lnkSignout").hide();
            // $("#welcomeUser").html("Welcome "+ userObject.getCurrentUser());
         }
         else{
@@ -151,31 +153,20 @@ $(document).ready(function(){
             return true;
         }
     };
+    $("#lnkLogout").click(function(){
 
-    console.log("jquery running");
-$("#notSignedIn").show();
-$("#signedIn").hide();
-$("#lnkLogout").click(function(e){
-    e.preventDefault();
-    e.stopPropagation(); 
-    $.post( "/api/loggedout")
-    .done(function( data ) {
+        // TODO:  When session is implemented, delete session on server side also
 
-        //console.log(JSON.stringify(data));
-        console.log("signed out");
+        userObject.removeCurrentUser(); // will this update UI?
         onSignIn(false);
-        if(data.success){
-            userObject.removeCurrentUser();
-        }
     })
-    .fail(function() {
-        //alert( "error" );
-    })
-    .always(function() {
-        //alert( "finished" );
-    });
-
-})
+    console.log("jquery running");
+if(userObject.isUserLoggedIn()){
+    onSignIn(true);
+}
+else{
+    onSignIn(false);
+}
 $("#btnLogIn").on('click', function(e){
     e.preventDefault();
     e.stopPropagation(); 

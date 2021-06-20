@@ -64,16 +64,6 @@ app.get('/login',function(req,res){
     htmlBase=__dirname+'/public/index.html';
     res.sendFile(htmlBase);
 })
-app.use(session({
-    secret: 'goutham',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        maxAge: 60 * 60 * 1000
-    },
-    store: MongoStore.create({ mongoUrl: process.env.MONGO_CONNECT_STRING })
-  
-  }))
 
   app.get("/api/search:user",function(req,res){
       var user=req.params.user;
@@ -82,6 +72,20 @@ app.use(session({
         res.json(resultJson);
        })
   })
+
+  app.use(session({
+    resave:false, 
+    saveUninitialized:false, 
+    secret:config.sessionSecret, 
+    store: MongoStore.create({ mongoUrl: config.mongoConnectionString })
+}));
+  const isAuth=(req,res,next)=>{
+      if(req.session.isAuth){
+          next()
+      }else{
+          res.redirect('/index');
+      }
+  }
   app.post('/api/login', function(req, res) {
     user.find(req.body, function(err, data) {
         var response = {success: false, message: 'Login Failed', user: null };
@@ -93,6 +97,7 @@ app.use(session({
             response.success = true;
         response.message = 'Login Successful';
         response.user = {username: req.session.username};
+        req.session.isAuth=true;
             res.json(response);
         } else {
 
@@ -116,18 +121,7 @@ var isNotAuthenticated = (req, res, next) => {
 app.get("/", isAuthenticated, (req, res) => {
     res.sendFile(__dirname + "/public/sample.html")
 })
-app.post("/api/loggedout", (req, res) => {
-    var response = {success: false, message: 'Login Failed', user: null };
-    req.session.destroy(err => {
-        if (err)
-            return res.status(404).json({
-                err: "error"
-            }) 
-    })
 
-    res.json(response);
-
-})
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.get('/check',function(req,res){
@@ -142,10 +136,7 @@ app.get('/test',function(req,res){
     path=__dirname+'/public/test.html';
     res.sendFile(path);
 })
-app.get('/chat',function(req,res){
-    path=__dirname+'/public/chat.html';
-    res.sendFile(path);
-})
+
 app.get('/searchbox',function(req,res){
     path=__dirname+'/public/searchbox.html';
     res.sendFile(path);

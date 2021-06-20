@@ -21,6 +21,9 @@ router.post('/api/login',function(req,res){
       if(resultJson.success==true){
         //console.log("Session for User Initialized");
         //req.session.user = {username: resultJson.username};
+        console.log("Session for User Initialized");
+            console.log(resultJson);
+            req.session.user = {username: resultJson.user.username};
       }
       res.json(resultJson);
      })
