@@ -18,6 +18,24 @@ module.exports.isUserValid=function(userJson,cb){
         cb(response);
     })
 }
+module.exports.mailCheck=function(userJson,cb){
+    var query = {email: userJson.email};
+
+    userModel.find(query, function(err, collections){
+        var response = {success: false, message: 'Registration Successful', user: null };
+        if(err){
+            response.message = 'Server Side Error Occured, Try again after some time';
+            return cb(response);
+        }
+        if(collections.length==0){
+            response.message = 'Registration Successful';
+            return cb(response);
+        }
+        response.success = true;
+        response.message = 'Email Id already registered';
+        cb(response);
+    })
+}
 module.exports.search=function(userJson,cb){
     var query = {username: userJson};
 

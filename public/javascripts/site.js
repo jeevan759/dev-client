@@ -12,7 +12,6 @@
     }
 }*/
 
-
 $("#lnkSignout").on('click',function(){
     $.post( "/api/logout")
     .done(function( data ) {

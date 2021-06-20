@@ -64,14 +64,23 @@ router.post("/regis",function(req,res){
       "email":email,
       "phonenumber":phonenumber
   }
-  user.insertMany(data,(err,collection)=>{
+userLib.mailCheck(req.body,function(resultJson){
+  if(resultJson.success==true)
+  {
+    res.json(resultJson);
+  }
+  else{
+    user.insertMany(data,(err,collection)=>{
       if(err)
       {
           throw err;
       }
       console.log(data);
       res.json(data);
+      res.redirect('/login');
   });
+  }
+})
 });
 router.put("/edit:oldusername", userLib.update);
 router.post('/api/logout',function(req,res){
