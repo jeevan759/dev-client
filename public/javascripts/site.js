@@ -12,12 +12,7 @@
     }
 }*/
 
-$("#slide").hide();
-$("#profileb").hide();
-$("#mailb").hide();
-$("#signedInchat").hide();
-$("#notSignedIn").show();
-$("#signedIn").hide();
+
 $("#lnkSignout").on('click',function(){
     $.post( "/api/logout")
     .done(function( data ) {
