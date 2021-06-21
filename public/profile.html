@@ -96,11 +96,39 @@
 </body>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script>
+  var userObject = {
+        saveUserInLocalStorage : function(userJson){
+            window.localStorage.setItem('currentUser', JSON.stringify(userJson));
+        },
+        removeCurrentUser: function(){
+            window.localStorage.removeItem('currentUser');
+        },
+        getCurrentUser : function(){
+            return window.localStorage.getItem('currentUser');
+        },
+        getCurrentUserName : function(){
+            var curUserString = this.getCurrentUser();
+            if(curUserString){
+                var json = JSON.parse(curUserString);
+                if(json && json.username)
+                    return json.username;
+                return "";
+            }
+            return "";
+        },
+        isUserLoggedIn : function(){
+            if(this.getCurrentUser()==null)
+                return false;
+            return true;
+        }
+    };
+    var value=userObject.getCurrentUserName();
+        $("#oldusername").val(value);
     $( ".form-check-input" ).on( "change", function() {
         if($('.form-check-input').prop('checked')){
             //console.log("checked");
         $("#username").prop("disabled", false);
-        $("#oldusername").prop("disabled", false);
+        //$("#oldusername").prop("disabled", false);
         $("#date").prop("disabled", false);
         $("#email").prop("disabled", false);
         $("#phonenumber").prop("disabled", false);

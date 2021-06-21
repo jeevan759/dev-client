@@ -195,12 +195,6 @@ $("#btnLogIn").on('click', function(e){
 })
 })
 //console.log(datapro);
-$("#profile").on('click',function(){
-    $("#username").html( JSON.stringify(datapro.user.username));
-    $("#date").html( JSON.stringify(datapro.user.date));
-    $("#email").html(JSON.stringify(datapro.user.email));
-    $("#phonenumber").html(JSON.stringify(datapro.user.phonenumber));
-})
 
 var slideIndex = 0;
 showSlides();
