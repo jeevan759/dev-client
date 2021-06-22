@@ -28,7 +28,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Profile</a>
+            <a class="nav-link" href="/profile.html">Profile</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">About</a>
@@ -46,53 +46,19 @@
         </ul>
       </div>
   </nav>
-  <div id="profile-space" style="padding-top: 60px;">
-    <form class="d-flex">
-        <form  aria-disabled="true">
-            <fieldset>
-              <legend>PROFILE</legend>
-              
-      <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-        <label class="form-check-label" for="flexSwitchCheckDefault">EDIT PROFILE</label>
-      </div>
-      <div class="form-group">
-        <label for="exampleInputEmail1" class="form-label mt-4">Old Username</label>
-        <input type="text" class="form-control" id="oldusername" aria-describedby="emailHelp" placeholder="Enter Old Username" disabled="true">
-        <small id="emailHelp" class="form-text text-muted"></small>
-      </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1" class="form-label mt-4">New Username</label>
-                <input type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter New Username" disabled="true">
-                <small id="emailHelp" class="form-text text-muted"></small>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1" class="form-label mt-4">Birthday</label>
-                <input type="date" class="form-control" id="date" placeholder="Birthday" disabled="true">
-              </div>
-              <fieldset class="form-group">
-                <div class="form-group">
-                  <label for="exampleInputEmail1" class="form-label mt-4">Email address</label>
-                  <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" disabled="true">
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1" class="form-label mt-4">Email Phone Number</label>
-                  <input type="text" class="form-control" id="phonenumber" aria-describedby="emailHelp" placeholder="Enter Phone Number" disabled="true">
-                </div>
-                    
-                </fieldset>
-                
-            </fieldset>
-        </form>
-        <button onclick="save()" type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
-
+  <div id="table" style="padding-top: 80px;width: 100%;">
+          <table id="tab" style="border: 1px solid white;padding: 10px;">
+            <tr style="border: 1px solid white;padding: 10px;">
+                <th style="border: 1px solid white;padding: 10px;">profile pic</th>
+                <th style="border: 1px solid white;padding: 10px;">username</th>
+                <th style="border: 1px solid white;padding: 10px;">Send Request</th>
+                </tr>
+          </table>
+  </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js" integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="/javascripts/site.js"></script>
 </body>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script>
@@ -124,69 +90,23 @@
     };
     var value=userObject.getCurrentUserName();
         $("#oldusername").val(value);
-        
-
-    $( ".form-check-input" ).on( "change", function() {
-        if($('.form-check-input').prop('checked')){
-            //console.log("checked");
-        $("#username").prop("disabled", false);
-        //$("#oldusername").prop("disabled", false);
-        $("#date").prop("disabled", false);
-        $("#email").prop("disabled", false);
-        $("#phonenumber").prop("disabled", false);
-        }
-        else{
-          $("#oldusername").prop("disabled", true);
-            $("#username").prop("disabled", true);
-        $("#date").prop("disabled", true);
-        $("#email").prop("disabled", true);
-        $("#phonenumber").prop("disabled", true);
-        }
-});
-$.ajax({
-
-        url: "/data"+value,
-        type: "GET",
-        success: function(data) {
-          //console.log("hi");
-        if(data.success){
-          console.log(data);
-          $("#username").val(data.user.username);
-          $("#date").val(data.user.birthday);
-          $("#email").val(data.user.email);
-          $("#phonenumber").val(data.user.phonenumber);
-          //console.log(data);
-        //toastr.success( 'Updated successfully');
-        }
-        },
-        error: function (xhr, status, error) {
-        //alert(error);
-        }
-        });
-    /*$.post("/api/users",userObject)
-        .done(function(data){
-            console.log(data);
-        });*/
-
-
-    function save(){
-      console.log("saved");
        // $('#one').html("Registration Successful");
     var userObject={};
-    userObject.oldusername=$("#oldusername").val();
-    userObject.username=$("#username").val();
-    userObject.date=$("#date").val();
-    userObject.email=$("#email").val();
-    userObject.phonenumber=$("#phonenumber").val();
     //console.log(userObject);
     $.ajax({
-        url: "/edit"+userObject.oldusername,
-        type: "PUT",
-        data: userObject,
+        url: "/api/userdetails",
+        type: "GET",
         success: function(data) {
-          console.log("hi");
+            //console.log(data.users);
         if(data.success){
-        toastr.success( 'Updated successfully');
+           for(var i=0;i<data.users.length;i++){
+            var row = `<tr scope="row" class="test-row-" style="border: 1px solid white;">
+                       <td style="border: 1px solid white;padding: 20px;">profile</td>
+                       <td style="border: 1px solid white;padding: 20px;">${data.users[i].username}</td>
+                       <td style="border: 1px solid white;padding: 20px;"><button>Send Request</button></td>
+                       </tr>`
+          $('#tab').append(row);
+           }
         }
         },
         error: function (xhr, status, error) {
@@ -197,6 +117,6 @@ $.ajax({
         .done(function(data){
             console.log(data);
         });*/
-}
+
 </script>
 </html>

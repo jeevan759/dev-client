@@ -80,8 +80,11 @@
 <script>
    $( '#password, #cpassword' ).on( 'keyup', function ()
     {
-        if ( $( '#password' ).val() == "" )
+      console.log("key");
+        if ( $( '#password' ).val() == ""){
             $( '#message' ).html( 'Cannot be Empty' ).css( 'color', 'red' );
+            $( '#btn' ).attr( 'disabled', true );
+          }
         else if ( $( '#password' ).val() == $( '#cpassword' ).val() )
         {
             $( '#btn' ).attr( 'disabled', false );

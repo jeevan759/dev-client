@@ -28,6 +28,22 @@ router.post('/api/login',function(req,res){
       res.json(resultJson);
      })
 })
+router.get("/api/userdetails",function(req,res){
+  //console.log(user);
+userLib.searchdetails(function(resultJson){
+    //console.log(resultJson);
+    res.json(resultJson);
+   })
+})
+router.get("/data:user",function(req,res){
+  //console.log(user);
+  var dat=req.params.user;
+userLib.getdata(dat,function(resultJson){
+    //console.log(resultJson);
+    res.json(resultJson);
+   })
+})
+//router.get('/userdetails',userLib.getall);
 router.post('/api/loggedin',function(req,res){
   let token=req.body.token;
   console.log(token);

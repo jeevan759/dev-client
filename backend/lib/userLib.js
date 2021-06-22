@@ -55,6 +55,40 @@ module.exports.search=function(userJson,cb){
         cb(response);
     })
 }
+module.exports.searchdetails=function(cb){
+    var query = {};
+     console.log("entered");
+    userModel.find(query, function(err, collections){
+        var response = {success: false ,users:null};
+        if(err){
+            return cb(response);
+        }
+        if(collections.length==0){
+            return cb(response);
+        }
+        //console.log(collections.username);
+        response.success = true;
+        response.users=collections;
+        cb(response);
+    })
+}
+module.exports.getdata=function(data,cb){
+    var query = {username:data};
+     console.log("entered");
+    userModel.find(query, function(err, collections){
+        var response = {success: false ,user:null};
+        if(err){
+            return cb(response);
+        }
+        if(collections.length==0){
+            return cb(response);
+        }
+        //console.log(collections.username);
+        response.success = true;
+        response.user=collections[0];
+        cb(response);
+    })
+}
 module.exports.getall = function(req,res)
 {
 var query = {};
