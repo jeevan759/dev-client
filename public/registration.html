@@ -115,6 +115,9 @@ else if(document.getElementById('other').checked) {
    // userObject.gender=$("#gender").val();
     userObject.email=$("#email").val();
     userObject.phonenumber=$("#phonenumber").val();
+    userObject.filename=null;
+    userObject.contentType=null;
+    userObject.image=null;
     //console.log(userObject);
     $.ajax({
         url: "/regis",

@@ -15,6 +15,7 @@ const {userJoin,getCurrentUser,userLeave,getRoomUsers}=require('./public/utils/u
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var userLib=require('./backend/lib/userLib');
+
 const mongoose=require('mongoose');
 mongoose.set('useFindAndModify', false);
 
@@ -90,6 +91,7 @@ app.get('/login',function(req,res){
           res.redirect('/index');
       }
   }
+
   app.post('/api/login', function(req, res) {
     user.find(req.body, function(err, data) {
         var response = {success: false, message: 'Login Failed', user: null };
@@ -155,6 +157,10 @@ app.get('/image',function(req,res){
 })
 app.get('/userdetails',function(req,res){
     path=__dirname+'/public/userdetails.html';
+    res.sendFile(path);
+})
+app.get('/div',function(req,res){
+    path=__dirname+'/public/div.html';
     res.sendFile(path);
 })
 const port = process.env.PORT || 3000;

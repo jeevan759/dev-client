@@ -99,6 +99,7 @@ function onSignIn(googleUser) {
         };
         xhr.send(JSON.stringify({token: id_token}));
 }
+
 $(document).ready(function(){ 
     var onSignIn = function(loggedIn){
         if(loggedIn){

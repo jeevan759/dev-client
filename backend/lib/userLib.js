@@ -188,3 +188,22 @@ res.json(file);
     })
 
 };
+
+module.exports.postdata=function(cb){
+    var query = {};
+     console.log("entered");
+    userModel.find(query, function(err, collections){
+        var response = {success: false ,users:null};
+        if(err){
+            return cb(response);
+        }
+        if(collections.length==0){
+            return cb(response);
+        }
+        //console.log(collections.username);
+        response.success = true;
+        response.users=collections;
+        console.log(response);
+        cb(response);
+    })
+}

@@ -2,12 +2,14 @@ var express = require('express');
 var router = express.Router();
 var userLib=require('../backend/lib/userLib');
 var user=require('../backend/models/registrationModel');
+var postsModel=require('../backend/models/postsModel');
 const CLIENT_ID= '445093466494-u1c7jg8178j553gv6o6ao8uohia3cja6.apps.googleusercontent.com';
 const {OAuth2Client} = require('google-auth-library');
 var session = require('express-session');
 const client = new OAuth2Client(CLIENT_ID);
 const cookieParser=require('cookie-parser');
 const store=require('../multer/multer');
+var projectLib=require('../backend/lib/projectLib');
 const path =require('path');
 const fs =require('fs');
 const multer=require('multer');
@@ -47,7 +49,6 @@ userLib.getdata(dat,function(resultJson){
     res.json(resultJson);
    })
 })
-//router.get('/userdetails',userLib.getall);
 router.post('/api/loggedin',function(req,res){
   let token=req.body.token;
   console.log(token);
@@ -76,7 +77,10 @@ router.post("/regis",function(req,res){
   //var first=req.body.username;
   var email=req.body.email;
   var phonenumber=req.body.phonenumber;
-  console.log(profilePicUrl);
+  var filename1=req.body.filename;
+  var contenttype=req.body.contentType;
+  var imageb4=req.body.image;
+  //console.log(profilePicUrl);
   var data={
       "username":username,
       "password":password,
@@ -84,7 +88,10 @@ router.post("/regis",function(req,res){
       "gender":gender,
       "email":email,
       "phonenumber":phonenumber,
-      "profilePicUrl":profilePicUrl,
+      "filename":filename1,
+      "contentType":contenttype,
+      "image":imageb4,
+      
   }
 userLib.mailCheck(req.body,function(resultJson){
   if(resultJson.success==true)
@@ -179,4 +186,54 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
       })
   
   });
+  /*router.get("/posts",function(req,res){
+    //console.log(user);
+  userLib.postdata(function(resultJson){
+      //console.log(resultJson);
+      res.json(resultJson);
+     })
+  })*/
+  router.post("/uploadposts",store.single('image'), (req,res,next)=>{
+
+    //  
+        const file=req.file;
+        console.log(file);
+        if (!file){
+            const error =new Error('please choose files');
+            error.httpStatusCode=400;
+            return next(error)
+        }
+        let img=fs.readFileSync(file.path);
+        let encoded_img=img.toString('base64');
+        let filename1 = file.originalname;
+        let contenttype = file.mimetype;
+        let immageb4= encoded_img;
+    
+        var obj = new postsModel({filename:filename1,contentType:contenttype,image:immageb4});
+    console.log(obj);
+    obj.save(function(err){
+        if(err)
+        console.log("ERROR: "+err);
+        else
+        console.log("SAV SUCCESS "+ JSON.stringify(obj));
+        })   
+    
+    });
+
+
+    router.post("/posts",function(req,res){
+      var data=req.body;
+      data.userid=req.session.userid;
+      console.log(data);
+      projectLib.addNewProject(req.body,function(resultJson){
+        res.json(resultJson);
+      })
+    });
+    router.get("/getposts",function(req,res){
+      var data={};
+      data.userid=req.session.userid;
+      projectLib.getProjectsPostedByUser(data,function(resultJson){
+        res.json(resultJson);
+      })
+    });
 module.exports = router;
