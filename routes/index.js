@@ -7,6 +7,10 @@ const {OAuth2Client} = require('google-auth-library');
 var session = require('express-session');
 const client = new OAuth2Client(CLIENT_ID);
 const cookieParser=require('cookie-parser');
+const store=require('../multer/multer');
+const path =require('path');
+const fs =require('fs');
+const multer=require('multer');
 router.use(cookieParser());
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -72,13 +76,15 @@ router.post("/regis",function(req,res){
   //var first=req.body.username;
   var email=req.body.email;
   var phonenumber=req.body.phonenumber;
+  console.log(profilePicUrl);
   var data={
       "username":username,
       "password":password,
       "birthday":birthday,
       "gender":gender,
       "email":email,
-      "phonenumber":phonenumber
+      "phonenumber":phonenumber,
+      "profilePicUrl":profilePicUrl,
   }
 userLib.mailCheck(req.body,function(resultJson){
   if(resultJson.success==true)
@@ -140,4 +146,37 @@ verify()
 })
 }
 
+router.post("/uploadimage",store.single('image'), (req,res,next)=>{
+
+  //  
+      const file=req.file;
+      console.log(file);
+      if (!file){
+          const error =new Error('please chosse files');
+          error.httpStatusCode=400;
+          return next(error)
+      }
+      let img=fs.readFileSync(file.path);
+      let encoded_img=img.toString('base64');
+      let filename1 = file.originalname;
+      let contenttype = file.mimetype;
+      let immageb4= encoded_img;
+  
+      var obj = user.find({username: req.body.username1},function(err,obj){
+          // console.log(obj);
+          // console.log(username);
+      user.findByIdAndUpdate(obj[0]._id, {filename:filename1,contentType:contenttype,image:immageb4},
+       function (err, docs) {
+      if (err){
+       console.log(err)
+      }
+      else{
+       console.log("Updated User : ", docs);
+         }
+        });
+      
+      
+      })
+  
+  });
 module.exports = router;

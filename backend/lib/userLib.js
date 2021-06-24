@@ -1,4 +1,32 @@
 var userModel=require('../models/registrationModel');
+const multer= require('multer');
+const fs =require('fs');
+var userObject = {
+    saveUserInLocalStorage : function(userJson){
+        window.localStorage.setItem('currentUser', JSON.stringify(userJson));
+    },
+    removeCurrentUser: function(){
+        window.localStorage.removeItem('currentUser');
+    },
+    getCurrentUser : function(){
+        return window.localStorage.getItem('currentUser');
+    },
+    getCurrentUserName : function(){
+        var curUserString = this.getCurrentUser();
+        if(curUserString){
+            var json = JSON.parse(curUserString);
+            if(json && json.username)
+                return json.username;
+            return "";
+        }
+        return "";
+    },
+    isUserLoggedIn : function(){
+        if(this.getCurrentUser()==null)
+            return false;
+        return true;
+    }
+};
 module.exports.isUserValid=function(userJson,cb){
     var query = {username: userJson.username, password:userJson.password, isDeleted:{$ne : true}};
 
@@ -69,6 +97,7 @@ module.exports.searchdetails=function(cb){
         //console.log(collections.username);
         response.success = true;
         response.users=collections;
+        console.log(response);
         cb(response);
     })
 }
@@ -111,7 +140,7 @@ module.exports.update = function(req,res)
         const query = { username: user };
         console.log((req.body.date))
    //Model.findOneAndUpdate(query, { name: 'jason bourne' }, options, callback)
-    userModel.findOneAndUpdate(query, {username:(req.body.username),date: (req.body.date),email: (req.body.email),phonenumber:(req.body.phonenumber)},
+    userModel.findOneAndUpdate(query, {username:(req.body.username),date: (req.body.date),email: (req.body.email),phonenumber:(req.body.phonenumber),profilePicUrl:(req.body.profilePicUrl)},
      function (err, docs) {
     if (err){
 console.log(err)
@@ -125,3 +154,37 @@ console.log("Updated User : ", docs);
     })
 }
 
+
+
+module.exports.upload=function(req,res,next){
+    const file=req.file;
+    var name=userObject.getCurrentUserName;
+    console.log(name);
+    //console.log(file);
+    if (!file){
+        const error =new Error('please chosse files');
+        error.httpStatusCode=400;
+        return next(error)
+    }
+    let img=fs.readFileSync(file.path);
+    let encoded_img=img.toString('base64');
+    let filename1 = file.originalname;
+    let contenttype = file.mimetype;
+    let immageb4= encoded_img;
+
+    var obj = userModel.find({username: name},function(err,obj){
+        // console.log(obj);
+        // console.log(username);
+    userModel.findByIdAndUpdate(obj[0]._id, {filename:filename1,contentType:contenttype,image:immageb4},
+     function (err, docs) {
+    if (err){
+console.log(err)
+}
+else{
+// console.log("Updated User : ", docs);
+}
+});
+res.json(file);
+    })
+
+};

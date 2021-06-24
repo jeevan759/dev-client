@@ -3,6 +3,7 @@ var app = express();
 var MongoStore = require('connect-mongo');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 var logger = require('morgan');
 var session = require('express-session');
 var dbconnect = require('./backend/lib/connectLib');
@@ -17,8 +18,11 @@ var userLib=require('./backend/lib/userLib');
 const mongoose=require('mongoose');
 mongoose.set('useFindAndModify', false);
 
+var multer=require('multer');
+const fs=require('fs');
 const http=require('http');
 const socketio=require('socket.io');
+//const bodyParser = require('body-parser');
 const server=http.createServer(app);
 const io= socketio(server);
 const botName='Chat Bot';
@@ -145,6 +149,10 @@ app.get('/slide',function(req,res){
     path=__dirname+'/public/slide.html';
     res.sendFile(path);
 })
+app.get('/image',function(req,res){
+    path=__dirname+'/public/image.html';
+    res.sendFile(path);
+})
 app.get('/userdetails',function(req,res){
     path=__dirname+'/public/userdetails.html';
     res.sendFile(path);
@@ -153,4 +161,39 @@ const port = process.env.PORT || 3000;
 server.listen(port, () => {
     console.log(`Socket.IO server running at http://localhost:${port}/`);
   });
+
+/*var storage=multer.diskStorage({
+    destination:function(req,file,cb){
+        cb(null,'uploads');
+    },
+    filename:function(req,file,cb){
+                cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+})
+
+var upload=multer({
+    storage:storage
+})
+
+app.post("/uploadphoto",upload.single('myImage'),(req,res)=>{
+    console.log("hello");
+    var img=fs.readFileSync(req.file.path);
+    var encode_image=img.toString('base64');
+    var finalImg={
+        contentType:req.file.mimetype,
+        path:req.file.path,
+        image:new Buffer(encode_image,'base64')
+    };
+
+    dbconnect.collections('courses').insertOne(finalImg,(err,result)=>{
+        console.log(result);
+
+        if(err) return console.log(err);
+
+        console.log("saved to db");
+        res.contentType(finalImg.contentType);
+        res.send(finalImg.image);
+    })
+})*/
+  
 module.exports = app;

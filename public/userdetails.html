@@ -49,7 +49,7 @@
   <div id="table" style="padding-top: 80px;width: 100%;">
           <table id="tab" style="border: 1px solid white;padding: 10px;">
             <tr style="border: 1px solid white;padding: 10px;">
-                <th style="border: 1px solid white;padding: 10px;">profile pic</th>
+                <th style="border: 1px solid white;padding: 10px;">Profile</th>
                 <th style="border: 1px solid white;padding: 10px;">username</th>
                 <th style="border: 1px solid white;padding: 10px;">Send Request</th>
                 </tr>
@@ -99,9 +99,11 @@
         success: function(data) {
             //console.log(data.users);
         if(data.success){
+          //console.log(data.users.image);
            for(var i=0;i<data.users.length;i++){
+             console.log(data.users[i].image);
             var row = `<tr scope="row" class="test-row-" style="border: 1px solid white;">
-                       <td style="border: 1px solid white;padding: 20px;">profile</td>
+                       <td style="border: 1px solid white;padding: 20px;"><img src='data:image/png;base64,${data.users[i].image}' width="100px" height="100px"></td>
                        <td style="border: 1px solid white;padding: 20px;">${data.users[i].username}</td>
                        <td style="border: 1px solid white;padding: 20px;"><button>Send Request</button></td>
                        </tr>`

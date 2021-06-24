@@ -108,3 +108,28 @@ img {vertical-align: middle;}
 @media only screen and (max-width: 300px) {
   .text {font-size: 11px}
 }
+
+.img{
+  float: right;
+  width: 100px;
+   padding-top: 80px;
+  margin-right:400px;
+  border-radius: 20px;
+}
+.file
+{
+  float: right;
+  margin-right: 10px;
+  margin-top: 200px;
+  
+}
+ #username1{
+  float: right;
+  margin-right: 10px;
+  margin-top: 200px;
+ }
+ #buttonimg{
+  float: right;
+  margin-right: 10px;
+  margin-top: 200px;
+}
