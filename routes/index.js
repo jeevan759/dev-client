@@ -240,6 +240,8 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
     router.get("/postuserdetails:id",function(req,res){
       //console.log(user);
       var id=req.params.id;
+      var obj=req.body.obj;
+      console.log(obj);
     userLib.getuserdetails(id,function(resultJson){
         //console.log(resultJson);
         res.json(resultJson);

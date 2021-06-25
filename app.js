@@ -159,8 +159,8 @@ app.get('/userdetails',function(req,res){
     path=__dirname+'/public/userdetails.html';
     res.sendFile(path);
 })
-app.get('/div',function(req,res){
-    path=__dirname+'/public/div.html';
+app.get('/boots',function(req,res){
+    path=__dirname+'/public/boots.html';
     res.sendFile(path);
 })
 const port = process.env.PORT || 3000;
