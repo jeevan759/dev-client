@@ -1,4 +1,5 @@
 var projectModel=require('../models/projectModel');
+var userModel=require('../models/registrationModel');
 
 module.exports.addNewProject = function(data,cb){
 	var newProjectJson = {

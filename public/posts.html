@@ -55,7 +55,7 @@
     <button class="btn btn-secondary my-2 my-sm-0" type="submit" id="btnPost">Post</button>
   </div>
   <div id="table" style="padding-top: 80px;padding-left:350px">
-    <table id="tab" style="border: 1px solid white;padding: 10px;border-spacing: 15px;">
+    <table id="tab" >
       
     </table>
 </div>
@@ -73,6 +73,7 @@ type: "GET",
 success: function(data) {
   //console.log("hi");
 if(data.result){ 
+  window.localStorage.setItem('project', JSON.stringify(data.projects));
     //console.log(data);
     //var value=document.getElementById('exampleTextarea').value;
     //var text=document.getElementById('txt').value;
@@ -82,26 +83,43 @@ if(data.result){
         url: "/postuserdetails"+id,
         type: "GET",
         success: function(details) {
+          // console.log(details.users);
           //console.log("hi");
         if(details.success){
-            //console.log(i);
-            //console.log(details.users.image);
-            var row = `<table><tr style="border: 1px solid white;padding: 10px;">
-                </tr><tr scope="row" class="test-row-" style="border: 1px solid black;background-color:white;height:100px;width:100px">   
-                    </tr><img src='data:image/png;base64,${details.users.image}' width="100px" height="100px">
-                       </table><br>
+          var obj=JSON.parse(window.localStorage.getItem('project'));
+          // console.log(obj);
+          for(var j=0;j<obj.length;j++){
+             var idp=obj[j].postedBy;
+            //  console.log(details.users._id);
+             if(details.users._id== idp){
+              var row = `<table>
+                <tr scope="row" class="test-row-" style="border: 1px solid white; diplay:inline-block;background-color:white;height:100px;width:100px">   
+                    
+                    <tr><p ><img src='data:image/png;base64,${details.users.image}' border:1px solid red; width="50px" height=auto>&nbsp${details.users.username} &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp  &nbsp&nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp${obj[j].createdAt}<p></tr>
+                     
+                      
+                     <tr><div style="border: 1px solid black;color:black;height:auto;width:600px;background-color:grey"><h3>${obj[j].title}</h3></div>
+                       <div style="border: 1px solid black;color:black;height:auto;width:600px;background-color:white">${obj[j].requirement}</div>
+                      </tr></tr> </table><br>
                        
                     `
           $('#tab').append(row); 
-        toastr.success( 'Updated successfully');
+        
+
+             }
+
+          }
+
+          //console.log(i);
+            //console.log(details.users.image);
+            
         }
         },
         error: function (xhr, status, error) {
         //alert(error);
         }
         });
-        var row= `<div style="border: 1px solid black;color:black;height:100px;width:600px;background-color:grey">${data.projects[i].title}</div>
-                       <div style="border: 1px solid black;color:black;height:500px;width:600px;background-color:white">${data.projects[i].requirement}</div>`
+        var row=
                        $('#tab').append(row);
                     }             
   //console.log(data);
