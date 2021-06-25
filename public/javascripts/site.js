@@ -26,6 +26,7 @@ $("#lnkSignout").on('click',function(){
             $("#profileb").hide();
             $("#slide").hide();
             $("#users").hide();
+            $("#signedInPost").hide();
             signOut();
         }
     })
@@ -94,6 +95,7 @@ function onSignIn(googleUser) {
         $("#profileb").show();
         $("#slide").show();
         $("#users").show();
+        $("#signedInPost").show();
             //onSignIn(true);
         }
         };
@@ -113,6 +115,7 @@ $(document).ready(function(){
             $("#lnkLogout").show();
             $("#lnkSignout").hide();
             $("#users").show();
+            $("#signedInPost").show();
            // $("#welcomeUser").html("Welcome "+ userObject.getCurrentUser());
         }
         else{
@@ -124,6 +127,7 @@ $(document).ready(function(){
             $("#profileb").hide();
             $("#slide").hide();
             $("#users").hide();
+            $("#signedInPost").hide();
         }
     }
     var userObject = {

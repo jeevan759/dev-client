@@ -36,7 +36,6 @@ const registration = new mongoose.Schema({
     trim: true,
     
   },
-  profilePicUrl:String,
   filename: String,
   contentType:String,
   image:String
