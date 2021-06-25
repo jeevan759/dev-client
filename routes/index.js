@@ -236,4 +236,13 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
         res.json(resultJson);
       })
     });
+
+    router.get("/postuserdetails:id",function(req,res){
+      //console.log(user);
+      var id=req.params.id;
+    userLib.getuserdetails(id,function(resultJson){
+        //console.log(resultJson);
+        res.json(resultJson);
+       })
+    })
 module.exports = router;

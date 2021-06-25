@@ -72,21 +72,39 @@ url: "/getposts",
 type: "GET",
 success: function(data) {
   //console.log("hi");
-if(data.result){
-    console.log(data);
+if(data.result){ 
+    //console.log(data);
     //var value=document.getElementById('exampleTextarea').value;
     //var text=document.getElementById('txt').value;
     for(var i=0;i<data.projects.length;i++){
-    var row = `<table><tr style="border: 1px solid white;padding: 10px;">
-                </tr><tr scope="row" class="test-row-" style="border: 1px solid black;background-color:white;height:100px;width:100px">
-                       profile
-                       </tr>
+        var id=data.projects[i].postedBy;
+        $.ajax({
+        url: "/postuserdetails"+id,
+        type: "GET",
+        success: function(details) {
+          //console.log("hi");
+        if(details.success){
+            //console.log(i);
+            //console.log(details.users.image);
+            var row = `<table><tr style="border: 1px solid white;padding: 10px;">
+                </tr><tr scope="row" class="test-row-" style="border: 1px solid black;background-color:white;height:100px;width:100px">   
+                    </tr><img src='data:image/png;base64,${details.users.image}' width="100px" height="100px">
                        </table><br>
-                       <div style="border: 1px solid black;color:black;height:100px;width:600px;background-color:grey">${data.projects[i].title}</div>
-                       <div style="border: 1px solid black;color:black;height:500px;width:600px;background-color:white">${data.projects[i].requirement}</div>`
+                       
+                    `
           $('#tab').append(row); 
+        toastr.success( 'Updated successfully');
+        }
+        },
+        error: function (xhr, status, error) {
+        //alert(error);
+        }
+        });
+        var row= `<div style="border: 1px solid black;color:black;height:100px;width:600px;background-color:grey">${data.projects[i].title}</div>
+                       <div style="border: 1px solid black;color:black;height:500px;width:600px;background-color:white">${data.projects[i].requirement}</div>`
+                       $('#tab').append(row);
                     }             
-  console.log(data);
+  //console.log(data);
   
   
   //console.log(data);
