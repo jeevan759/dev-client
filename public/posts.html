@@ -196,13 +196,29 @@
                         url: "/postuserdetails" + id,
                         type: "GET",
                         success: function (details) {
-                            //console.log("hi");
+                          
+                            
                             if (details.success) {
-                                //var obj=JSON.parse(window.localStorage.getItem('project'));
-
-                                //console.log(data.projects[i]);
-                                $("#post").append(`<div style="padding-top:70px;" class="card gedf-card" id="post"><div class="card-header"><div class="d-flex justify-content-between align-items-center"><div class="d-flex justify-content-between align-items-center"><div class="mr-2"><img class="rounded-circle" width="45" src='data:image/png;base64,${details.users.image}' alt=""></div><div class="ml-2"><div class="h5 m-0">${details.users.username}</div><div class="h7 text-muted">Developer</div></div></div><div><div class="dropdown"><button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1"><div class="h6 dropdown-header">Configuration</div><a class="dropdown-item" href="#">Save</a><a class="dropdown-item" href="#">Hide</a><a class="dropdown-item" href="#">Report</a></div></div></div></div></div><div class="card-body"><div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i></div><a class="card-link" href="#"><h5 class="card-title"></h5></a><p class="card-text"></p></div><div class="card-footer"><a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a><a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a><a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a></div></div>`);
+                              var obj = JSON.parse(window.localStorage.getItem('project'));
+                              var post=[];
+                              
+                              for (j=0;j<obj.length;j++){
+                                if(obj[j].postedBy==details.users._id){
+                                  post.push(obj[j]);
+                                   obj[j].postedBy="0";
+                                } 
+                              }
+                              console.log(post);
+                     
+                                for(k=0;k<post.length;k++){
+                                $("#post").append(`<div style="padding-top:70px;" class="card gedf-card" id="post"><div class="card-header"><div class="d-flex justify-content-between align-items-center"><div class="d-flex justify-content-between align-items-center"><div class="mr-2"><img class="rounded-circle" width="45" src='data:image/png;base64,${details.users.image}' alt=""></div><div class="ml-2"><div class="h5 m-0">${details.users.username}</div><div class="h7 text-muted">Developer</div></div></div><div><div class="dropdown"><button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-h"></i></button><div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1"><div class="h6 dropdown-header">Configuration</div><a class="dropdown-item" href="#">Save</a><a class="dropdown-item" href="#">Hide</a><a class="dropdown-item" href="#">Report</a></div></div></div></div></div><div class="card-body"><div class="text-muted h7 mb-2"><p> 
+                                  ${post[k].title}</p></div><a class="card-link" href="#"><h5 class="card-title"></h5></a><p class="card-text"></p></div><div class="card-footer"><a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a><a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a><a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a></div></div>`);
                                 //toastr.success( 'Updated successfully');
+                                window.localStorage.setItem('project',JSON.stringify(obj));
+                                }
+                                
+
+                               
 
                             }
                         },
