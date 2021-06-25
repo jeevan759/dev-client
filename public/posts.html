@@ -77,8 +77,8 @@ if(data.result){
     //console.log(data);
     //var value=document.getElementById('exampleTextarea').value;
     //var text=document.getElementById('txt').value;
-    for(var i=0;i<data.projects.length;i++){
-        var id=data.projects[i].postedBy;
+    // for(var i=0;i<data.projects.length;i++){
+    //     var id=data.projects[i].postedBy;
         $.ajax({
         url: "/postuserdetails"+id,
         type: "GET",
@@ -119,9 +119,7 @@ if(data.result){
         //alert(error);
         }
         });
-        var row=
-                       $('#tab').append(row);
-                    }             
+                   
   //console.log(data);
   
   
