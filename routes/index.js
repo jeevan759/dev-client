@@ -22,7 +22,7 @@ router.get('/sample',checkAuthenticated,function(req,res){
   let user=req.user;
   res.render('sample',{user});
 })
-router.post('/api/login',function(req,res){
+/*router.post('/api/login',function(req,res){
   userLib.isUserValid(req.body,function(resultJson){
       if(resultJson.success==true){
         //console.log("Session for User Initialized");
@@ -33,7 +33,7 @@ router.post('/api/login',function(req,res){
       }
       res.json(resultJson);
      })
-})
+})*/
 router.get("/api/userdetails",function(req,res){
   //console.log(user);
 userLib.searchdetails(function(resultJson){

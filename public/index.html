@@ -53,7 +53,7 @@
             </li>
           </div>
           <li class="nav-item">
-            <a class="nav-link" href="#">about</a>
+            <a class="nav-link" href="/posts.html">posts</a>
           </li>
           <div id="signedInchat">
             <li class="nav-item">
@@ -230,12 +230,13 @@
 
 
 </body>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script>
   $.ajax({
         url: "/getposts",
         type: "GET",
         success: function (data) {
-            //console.log("hi");
+            console.log("hi");
             if (data.result) {
                 window.localStorage.setItem('project', JSON.stringify(data.projects));
                 var obj = JSON.parse(window.localStorage.getItem('project'));
@@ -352,6 +353,7 @@
         }
     };
     var username = userObject.getCurrentUserName();
+
 </script>
 
 </html>
