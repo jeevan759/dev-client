@@ -51,7 +51,7 @@ module.exports.getpostsPostedByUser = function(data1,cb){
 	if(data1.userid){
         console.log("hello");
 		var query = {};
-		postsModel.find(query, function(err, postsArray){
+		postModel.find(query, function(err, postsArray){
 			if(err){
 				resultObj.result= false;
 				resultObj.message = "Some error occured";
