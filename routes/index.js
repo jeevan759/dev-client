@@ -208,8 +208,9 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
         let filename1 = file.originalname;
         let contenttype = file.mimetype;
         let immageb4= encoded_img;
+        var usede= req.session.userid;
     
-        var obj = new postsModel({filename:filename1,contentType:contenttype,image:immageb4});
+        var obj = new postsModel({filename:filename1,contentType:contenttype,image:immageb4,postedBy:usede});
     console.log(obj);
     obj.save(function(err){
         if(err)
@@ -229,10 +230,17 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
         res.json(resultJson);
       })
     });
-    router.get("/getposts",function(req,res){
+    router.get("/getprojects",function(req,res){
       var data={};
       data.userid=req.session.userid;
       projectLib.getProjectsPostedByUser(data,function(resultJson){
+        res.json(resultJson);
+      })
+    });
+    router.get("/getposts",function(req,res){
+      var data1={};
+      data1.userid=req.session.userid;
+      projectLib.getpostsPostedByUser(data1,function(resultJson){
         res.json(resultJson);
       })
     });

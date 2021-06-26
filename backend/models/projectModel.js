@@ -7,7 +7,6 @@ var projectSchema = new mongoose.Schema({
     requirement: { type: String, require:true},
     // This field value will be _id of user from user table
     postedBy : {type:mongoose.Schema.Types.ObjectId, ref:'registration'},
-    username:{type:mongoose.Schema.Types.String, ref:'registration'},
     isDeleted : Boolean
 }, {
     timestamps: true
