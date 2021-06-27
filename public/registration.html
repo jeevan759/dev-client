@@ -31,6 +31,14 @@
                 <p id="message"></p>
               </div>
               <div class="form-group">
+                <label for="exampleFormControlSelect1">Role</label>
+                <select class="form-control" id="role">
+                  <option>Developer</option>
+                  <option>Client</option>
+                  
+                </select>
+              </div>
+              <div class="form-group">
                 <label for="exampleInputPassword1" class="form-label mt-4">Birthday</label>
                 <input type="date" class="form-control" id="date" placeholder="Birthday">
               </div>
@@ -103,6 +111,7 @@
     userObject.username=$("#username").val();
     userObject.password=$("#password").val();
     userObject.birthday=$("#date").val();
+    userObject.role=$("#role").val();
     if(document.getElementById('male').checked) {
         userObject.gender=$("#male").val();
 }else if(document.getElementById('female').checked) {

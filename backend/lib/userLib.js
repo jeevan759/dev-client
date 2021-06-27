@@ -226,3 +226,46 @@ module.exports.getuserdetails=function(id,cb){
         cb(response);
     })
 }
+
+
+module.exports.getDevCount=function(cb){
+    var query = {role:'Developer'};
+    //console.log(query);
+     console.log("entered");
+    userModel.find(query, function(err, collections){
+        var response = {success: false ,count:null};
+        if(err){
+            return cb(response);
+        }
+        if(collections.length==0){
+            console.log(response);
+            return cb(response);
+        }
+        //console.log(collections.username);
+        response.success = true;
+        response.count=collections.length;
+        console.log(response);
+        cb(response);
+    })
+}
+
+module.exports.getClientCount=function(cb){
+    var query = {role:'Client'};
+    //console.log(query);
+     console.log("entered");
+    userModel.find(query, function(err, collections){
+        var response = {success: false ,count:null};
+        if(err){
+            return cb(response);
+        }
+        if(collections.length==0){
+            console.log(response);
+            return cb(response);
+        }
+        //console.log(collections.username);
+        response.success = true;
+        response.count=collections.length;
+        console.log(response);
+        cb(response);
+    })
+}

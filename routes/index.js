@@ -74,13 +74,14 @@ router.post("/regis",function(req,res){
   var password=req.body.password;
   var birthday=req.body.birthday;
   var gender=req.body.gender;
+  var role=req.body.role;
   //var first=req.body.username;
   var email=req.body.email;
   var phonenumber=req.body.phonenumber;
   var filename1=req.body.filename;
   var contenttype=req.body.contentType;
   var imageb4=req.body.image;
-  console.log(profilePicUrl);
+  //console.log(profilePicUrl);
   var data={
       "username":username,
       "password":password,
@@ -91,6 +92,7 @@ router.post("/regis",function(req,res){
       "filename":filename1,
       "contentType":contenttype,
       "image":imageb4,
+      "role":role,
       
   }
 userLib.mailCheck(req.body,function(resultJson){
@@ -255,5 +257,23 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
         //console.log(resultJson);
         res.json(resultJson);
        })
+    })
+
+    router.get("/developers",function(req,res){
+      userLib.getDevCount(function(resultJson){
+        res.json(resultJson);
+      })
+    })
+
+    router.get("/clients",function(req,res){
+      userLib.getClientCount(function(resultJson){
+        res.json(resultJson);
+      })
+    })
+
+    router.get("/postscount",function(req,res){
+      userLib.getPostsCount(function(resultJson){
+        res.json(resultJson);
+      })
     })
 module.exports = router;
