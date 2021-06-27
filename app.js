@@ -65,6 +65,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/login',function(req,res){
     htmlBase=__dirname+'/public/index.html';
     res.sendFile(htmlBase);
@@ -77,13 +78,16 @@ app.get('/login',function(req,res){
         res.json(resultJson);
        })
   })
+app.use(session({
+    secret: "goutham",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 60 * 60 * 1000
+    },
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_CONNECT_STRING})
 
-  app.use(session({
-    resave:false, 
-    saveUninitialized:false, 
-    secret:config.sessionSecret, 
-    store: MongoStore.create({ mongoUrl: config.mongoConnectionString })
-}));
+}))
   const isAuth=(req,res,next)=>{
       if(req.session.isAuth){
           next()
@@ -103,7 +107,8 @@ app.get('/login',function(req,res){
             response.success = true;
         response.message = 'Login Successful';
         response.user = {username: req.session.username};
-        req.session.isAuth=true;
+        //req.session.isAuth=true;
+        //console.log(response);
             res.json(response);
         } else {
 
@@ -111,6 +116,20 @@ app.get('/login',function(req,res){
 
         }
     });
+})
+app.get("/api/loggedout", function(req,res){
+    
+    req.session.destroy(err => {
+        if (err)
+            return res.status(404).json({
+                err: "error"
+            })
+    })
+
+    return res.status(200).json({
+        message: "succcessfully signout"
+    })
+
 })
 var isAuthenticated = (req, res, next) => {
     if (req.session && req.session.userid)
@@ -126,6 +145,20 @@ var isNotAuthenticated = (req, res, next) => {
 }
 app.get("/", isAuthenticated, (req, res) => {
     res.sendFile(__dirname + "/public/sample.html")
+})
+
+app.get("/api/logout", isAuthenticated, (req, res) => {
+    req.session.destroy(err => {
+        if (err)
+            return res.status(404).json({
+                err: "error"
+            })
+    })
+
+    return res.status(200).json({
+        message: "succcessfully signout"
+    })
+
 })
 
 app.use('/', indexRouter);

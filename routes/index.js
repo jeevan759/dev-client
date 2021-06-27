@@ -22,7 +22,7 @@ router.get('/sample',checkAuthenticated,function(req,res){
   let user=req.user;
   res.render('sample',{user});
 })
-router.post('/api/login',function(req,res){
+/*router.post('/api/login',function(req,res){
   userLib.isUserValid(req.body,function(resultJson){
       if(resultJson.success==true){
         //console.log("Session for User Initialized");
@@ -33,7 +33,7 @@ router.post('/api/login',function(req,res){
       }
       res.json(resultJson);
      })
-})
+})*/
 router.get("/api/userdetails",function(req,res){
   //console.log(user);
 userLib.searchdetails(function(resultJson){
@@ -74,6 +74,7 @@ router.post("/regis",function(req,res){
   var password=req.body.password;
   var birthday=req.body.birthday;
   var gender=req.body.gender;
+  var role=req.body.role;
   //var first=req.body.username;
   var email=req.body.email;
   var phonenumber=req.body.phonenumber;
@@ -91,6 +92,7 @@ router.post("/regis",function(req,res){
       "filename":filename1,
       "contentType":contenttype,
       "image":imageb4,
+      "role":role,
       
   }
 userLib.mailCheck(req.body,function(resultJson){
@@ -168,11 +170,8 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
       let filename1 = file.originalname;
       let contenttype = file.mimetype;
       let immageb4= encoded_img;
-  
-      var obj = user.find({username: req.body.username1},function(err,obj){
-          // console.log(obj);
-          // console.log(username);
-      user.findByIdAndUpdate(obj[0]._id, {filename:filename1,contentType:contenttype,image:immageb4},
+      //console.log(req.body.username1);
+      user.findByIdAndUpdate(req.session.userid, {filename:filename1,contentType:contenttype,image:immageb4},
        function (err, docs) {
       if (err){
        console.log(err)
@@ -181,10 +180,6 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
        console.log("Updated User : ", docs);
          }
         });
-      
-      
-      })
-  
   });
   /*router.get("/posts",function(req,res){
     //console.log(user);
@@ -221,7 +216,6 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
     
     });
 
-
     router.post("/posts",function(req,res){
       var data=req.body;
       data.userid=req.session.userid;
@@ -230,7 +224,14 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
         res.json(resultJson);
       })
     });
-    router.get("/getprojects",function(req,res){
+    /*router.get("/getprojects",function(req,res){
+      var data={};
+      data.userid=req.session.userid;
+      projectLib.getPostsPostedByUser(data,function(resultJson){
+        res.json(resultJson);
+      })
+    });*/
+    router.get("/getposts",function(req,res){
       var data={};
       data.userid=req.session.userid;
       projectLib.getProjectsPostedByUser(data,function(resultJson){
@@ -245,6 +246,15 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
       })
     });
 
+    router.get("/getprojects",function(req,res){
+      var data={};
+      data.userid=req.session.userid;
+      projectLib.getpostsPostedByUser(data,function(resultJson){
+        res.json(resultJson);
+      })
+    });
+    
+
     router.get("/postuserdetails:id",function(req,res){
       //console.log(user);
       var id=req.params.id;
@@ -254,5 +264,23 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
         //console.log(resultJson);
         res.json(resultJson);
        })
+    })
+
+    router.get("/developers",function(req,res){
+      userLib.getDevCount(function(resultJson){
+        res.json(resultJson);
+      })
+    })
+
+    router.get("/clients",function(req,res){
+      userLib.getClientCount(function(resultJson){
+        res.json(resultJson);
+      })
+    })
+
+    router.get("/postscount",function(req,res){
+      userLib.getPostsCount(function(resultJson){
+        res.json(resultJson);
+      })
     })
 module.exports = router;

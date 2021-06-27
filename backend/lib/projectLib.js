@@ -1,5 +1,4 @@
 var projectModel=require('../models/projectModel');
-var userModel=require('../models/registrationModel');
 var postModel=require('../models/postsModel');
 
 module.exports.addNewProject = function(data,cb){

@@ -12,6 +12,13 @@ const registration = new mongoose.Schema({
     trim: true,
     
   },
+  role: {
+    type: String,
+    required: true,
+    trim: true,
+    
+  },
+  
   birthday: {
     type: String,
     required: true,

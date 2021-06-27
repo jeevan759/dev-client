@@ -119,6 +119,7 @@ function onSignIn(googleUser) {
 }
 
 $(document).ready(function(){ 
+    
     var onSignIn = function(loggedIn){
         if(loggedIn){
             console.log("Logged In");
@@ -132,7 +133,8 @@ $(document).ready(function(){
             $("#lnkSignout").hide();
             $("#users").show();
             $("#signedInPost").show();
-           // $("#welcomeUser").html("Welcome "+ userObject.getCurrentUser());
+            $("#welcomeUser").html("Welcome "+ userObject.getCurrentUserName());
+            $("#homeuser").html("WELCOME "+ userObject.getCurrentUserName());
         }
         else{
             console.log("Not Logged In");
@@ -173,10 +175,21 @@ $(document).ready(function(){
         }
     };
     $("#lnkLogout").click(function(){
-
         // TODO:  When session is implemented, delete session on server side also
-
-        userObject.removeCurrentUser(); // will this update UI?
+        $.ajax({
+            url: "/api/loggedout",
+            type: "GET",
+            success: function(data) {
+              
+            if(data.success){
+            //toastr.success( 'Updated successfully');
+            }
+            },
+            error: function (xhr, status, error) {
+            //alert(error);
+            }
+            });
+            userObject.removeCurrentUser(); // will this update UI?
         onSignIn(false);
     })
     console.log("jquery running");
@@ -186,6 +199,7 @@ if(userObject.isUserLoggedIn()){
 else{
     onSignIn(false);
 }
+//console.log((userObject.getCurrentUserName()));
 $("#btnLogIn").on('click', function(e){
     e.preventDefault();
     e.stopPropagation(); 
@@ -197,13 +211,12 @@ $("#btnLogIn").on('click', function(e){
     console.log(userObj);
     $.post( "/api/login", userObj)
     .done(function( data ) {
-        var datapro=data;
+        //var datapro=data;
         //console.log(datapro);
         //console.log(JSON.stringify(data));
-        
         if(data.success){
             toastr.success(data.message, 'Successful');
-            $("#welcomeUser").html("Welcome "+ JSON.stringify(data.user.username));
+            console.log(data.user);
             userObject.saveUserInLocalStorage(data.user);
             onSignIn(true);
         }
@@ -219,7 +232,7 @@ $("#btnLogIn").on('click', function(e){
     });
 })
 })
-//console.log(datapro);
+
 
 var slideIndex = 0;
 showSlides();
@@ -240,3 +253,4 @@ function showSlides() {
   dots[slideIndex-1].className += " active";
   setTimeout(showSlides, 2000); // Change image every 2 seconds
 }
+//console.log(datapro);
