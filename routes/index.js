@@ -271,9 +271,4 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
       })
     })
 
-    router.get("/postscount",function(req,res){
-      userLib.getPostsCount(function(resultJson){
-        res.json(resultJson);
-      })
-    })
 module.exports = router;

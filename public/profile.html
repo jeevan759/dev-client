@@ -14,12 +14,13 @@
 </head>
 <body>
   <div style="display:inline">
-    <form action="/uploadimage" enctype="multipart/form-data" method="POST" style="display:inline">
-      <img class="img" src="/profile.jpg">
-      <input   type="file" class="file" name="image" >
-      <input type="text" id="username1" name="username1">
-      <input type="submit" value="submit" id="buttonimg">
+    <form action="/uploadimage" enctype="multipart/form-data" method="POST" style="display:inline" target="uploader_iframe">
+      <img class="img" src="/profile.jpg" style="display: block;">
+      <input   type="file" class="file" name="image" style="display: block;">
+      <input type="text" id="username1" name="username1" style="display: block;">
+      <input type="submit" value="upload" id="buttonimg" style="display: block;" onclick="uploaded()">
     </form>
+    <iframe id="uploader_iframe" name="uploader_iframe" style="display: none;"></iframe>
     </div>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <div class="container-fluid">
@@ -38,9 +39,7 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Profile</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
+          
           
         </ul>
       </div>
@@ -90,11 +89,15 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.min.js" integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="/javascripts/site.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script>
+function uploaded(){
+    toastr.success( 'Updated successfully');
+}
+
   $(".file").change(function(event){
     var x = URL.createObjectURL(event.target.files[0]);
     //console.log(x);
