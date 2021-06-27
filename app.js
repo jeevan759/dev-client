@@ -108,7 +108,7 @@ app.use(session({
         response.message = 'Login Successful';
         response.user = {username: req.session.username};
         //req.session.isAuth=true;
-        console.log(response);
+        //console.log(response);
             res.json(response);
         } else {
 

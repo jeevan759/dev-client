@@ -117,7 +117,7 @@ $(document).ready(function(){
             $("#lnkSignout").hide();
             $("#users").show();
             $("#signedInPost").show();
-           // $("#welcomeUser").html("Welcome "+ userObject.getCurrentUser());
+            $("#welcomeUser").html("Welcome "+ userObject.getCurrentUserName());
         }
         else{
             console.log("Not Logged In");
@@ -182,8 +182,7 @@ if(userObject.isUserLoggedIn()){
 else{
     onSignIn(false);
 }
-console.log((userObject.getCurrentUserName()));
-$("#welcomeUser").html("Welcome "+ userObject.getCurrentUserName());
+//console.log((userObject.getCurrentUserName()));
 $("#btnLogIn").on('click', function(e){
     e.preventDefault();
     e.stopPropagation(); 
@@ -198,9 +197,9 @@ $("#btnLogIn").on('click', function(e){
         //var datapro=data;
         //console.log(datapro);
         //console.log(JSON.stringify(data));
-        
         if(data.success){
             toastr.success(data.message, 'Successful');
+            console.log(data.user);
             userObject.saveUserInLocalStorage(data.user);
             onSignIn(true);
         }

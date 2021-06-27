@@ -80,7 +80,7 @@ router.post("/regis",function(req,res){
   var filename1=req.body.filename;
   var contenttype=req.body.contentType;
   var imageb4=req.body.image;
-  //console.log(profilePicUrl);
+  console.log(profilePicUrl);
   var data={
       "username":username,
       "password":password,
@@ -168,11 +168,8 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
       let filename1 = file.originalname;
       let contenttype = file.mimetype;
       let immageb4= encoded_img;
-  
-      var obj = user.find({username: req.body.username1},function(err,obj){
-          // console.log(obj);
-          // console.log(username);
-      user.findByIdAndUpdate(obj[0]._id, {filename:filename1,contentType:contenttype,image:immageb4},
+      //console.log(req.body.username1);
+      user.findByIdAndUpdate(req.session.userid, {filename:filename1,contentType:contenttype,image:immageb4},
        function (err, docs) {
       if (err){
        console.log(err)
@@ -181,10 +178,6 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
        console.log("Updated User : ", docs);
          }
         });
-      
-      
-      })
-  
   });
   /*router.get("/posts",function(req,res){
     //console.log(user);
@@ -208,8 +201,9 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
         let filename1 = file.originalname;
         let contenttype = file.mimetype;
         let immageb4= encoded_img;
+        var usede= req.session.userid;
     
-        var obj = new postsModel({filename:filename1,contentType:contenttype,image:immageb4});
+        var obj = new postsModel({filename:filename1,contentType:contenttype,image:immageb4,postedBy:usede});
     console.log(obj);
     obj.save(function(err){
         if(err)
@@ -220,7 +214,6 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
     
     });
 
-
     router.post("/posts",function(req,res){
       var data=req.body;
       data.userid=req.session.userid;
@@ -229,6 +222,13 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
         res.json(resultJson);
       })
     });
+    /*router.get("/getprojects",function(req,res){
+      var data={};
+      data.userid=req.session.userid;
+      projectLib.getPostsPostedByUser(data,function(resultJson){
+        res.json(resultJson);
+      })
+    });*/
     router.get("/getposts",function(req,res){
       var data={};
       data.userid=req.session.userid;
@@ -236,6 +236,15 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
         res.json(resultJson);
       })
     });
+
+    router.get("/getprojects",function(req,res){
+      var data={};
+      data.userid=req.session.userid;
+      projectLib.getpostsPostedByUser(data,function(resultJson){
+        res.json(resultJson);
+      })
+    });
+    
 
     router.get("/postuserdetails:id",function(req,res){
       //console.log(user);
