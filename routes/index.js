@@ -255,6 +255,15 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
     });
     
 
+    router.get("/getprojects",function(req,res){
+      var data={};
+      data.userid=req.session.userid;
+      projectLib.getpostsPostedByUser(data,function(resultJson){
+        res.json(resultJson);
+      })
+    });
+    
+
     router.get("/postuserdetails:id",function(req,res){
       //console.log(user);
       var id=req.params.id;
