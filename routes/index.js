@@ -216,7 +216,7 @@ router.post("/uploadimage",store.single('image'), (req,res,next)=>{
         if(err)
         console.log("ERROR: "+err);
         else
-        console.log("SAV SUCCESS "+ JSON.stringify(obj));
+        res.json(filename1);
         })   
     
     });
