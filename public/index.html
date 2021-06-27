@@ -197,7 +197,7 @@
         type: "GET",
         success: function(data) {
         if(data.success){
-          window.localStorage.setItem('count1', JSON.stringify(data.count));
+          animateValue("count1", 0, data.count, 500);
          //$("#count1").append(`<h1>${data.count}</h1>`)
         //toastr.success( 'Updated successfully');
         }
@@ -212,7 +212,7 @@
         type: "GET",
         success: function(data) {
         if(data.success){
-          window.localStorage.setItem('count2', JSON.stringify(data.count));
+          animateValue("count2", 0, data.count, 500);
          //$("#count2").append(`<h1>${data.count}</h1>`)
         //toastr.success( 'Updated successfully');
         }
@@ -228,8 +228,7 @@
         success: function(data) {
           
         if(data.result){
-          console.log(data.projects.length);
-          window.localStorage.setItem('count3', JSON.stringify(data.projects.length));
+          animateValue("count3", 0, data.projects.length, 500);
          //$("#count3").append(`<h1>${data.projects.length}</h1>`)
         //toastr.success( 'Updated successfully');
         }
@@ -238,12 +237,8 @@
         //alert(error);
         }
         });
-        var count1 = (window.localStorage.getItem('count1'));
-        var count2 = (window.localStorage.getItem('count2'));
-        var count3 = (window.localStorage.getItem('count3'));
-        animateValue("count1", 0, count1, 500);
-        animateValue("count2", 0, count2, 500);
-        animateValue("count3", 0, count3, 500);
+
+      
 
         var userObject = {
         saveUserInLocalStorage: function (userJson) {
